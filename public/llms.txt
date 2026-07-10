@@ -1,0 +1,21 @@
+# seu cookie
+
+> Um caderno de receitas de família que virou loja. Cookies artesanais, feitos à mão, em Natal (RN), Brasil.
+
+seu cookie vende cookies recheados feitos sob encomenda. Cada sabor é uma "receita numerada" de um caderno de família que cresce com o tempo. Pedidos são feitos por conversa direta no WhatsApp — não há carrinho ou checkout online. Retirada, entrega na região de Natal e encomendas para festas.
+
+## Páginas
+
+- [Página inicial](https://seucookiebr.com.br/): a história da marca, receitas em destaque e como comprar.
+- [Cardápio completo](https://seucookiebr.com.br/cardapio): todas as receitas, organizadas por capítulo ("os clássicos", "os atrevidos", "os da estação"), com ingredientes e preços de R$ 9 a R$ 14.
+
+## Contato
+
+- WhatsApp (pedidos): https://wa.me/5584994082236
+- Instagram: https://instagram.com/sigaseucookie
+- Localização: Natal, RN, Brasil
+
+## Notas para agentes e crawlers
+
+- Preços e disponibilidade mudam com frequência (itens esgotam no mesmo dia). Trate o cardápio do site como a fonte mais atual, não como um valor fixo.
+- Não há loja física de varejo nem cardápio de terceiros (iFood, apps de delivery) — o único canal de pedido é o WhatsApp acima.
