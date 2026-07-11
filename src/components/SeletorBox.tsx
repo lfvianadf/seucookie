@@ -1,0 +1,88 @@
+"use client";
+
+import { useState } from "react";
+import { useCarrinho } from "@/context/CarrinhoContext";
+import { CAIXA, QUANTIDADE_CAIXA, SABORES, formatarPreco } from "@/lib/site";
+
+function contagemInicial() {
+  return Object.fromEntries(SABORES.map((s) => [s.numero, 0]));
+}
+
+export function SeletorBox() {
+  const { adicionarCaixa } = useCarrinho();
+  const [contagens, setContagens] = useState<Record<string, number>>(contagemInicial);
+
+  const total = Object.values(contagens).reduce((a, b) => a + b, 0);
+  const restante = QUANTIDADE_CAIXA - total;
+
+  function alterar(numero: string, delta: number) {
+    setContagens((atual) => {
+      const totalAtual = Object.values(atual).reduce((a, b) => a + b, 0);
+      const novaQtd = atual[numero] + delta;
+      if (novaQtd < 0) return atual;
+      if (delta > 0 && totalAtual >= QUANTIDADE_CAIXA) return atual;
+      return { ...atual, [numero]: novaQtd };
+    });
+  }
+
+  function adicionar() {
+    const composicao = SABORES.filter((s) => contagens[s.numero] > 0).map((s) => ({
+      numero: s.numero,
+      nome: s.nome,
+      quantidade: contagens[s.numero],
+    }));
+    adicionarCaixa(CAIXA, composicao);
+    setContagens(contagemInicial());
+  }
+
+  return (
+    <div>
+      <p className="font-corpo text-sm text-ameixa">
+        escolha os {QUANTIDADE_CAIXA} cookies da caixa
+        {restante > 0 ? ` — falta${restante === 1 ? "" : "m"} ${restante}` : " — pronta!"}
+      </p>
+
+      <ul className="mt-5 divide-y divide-berinjela/15 border-y border-berinjela/15">
+        {SABORES.map((sabor) => (
+          <li key={sabor.numero} className="flex items-center justify-between gap-3 py-4">
+            <span className="font-titulo text-xl text-berinjela">
+              {sabor.nome}
+            </span>
+            <div className="flex items-center gap-4 rounded-sm border border-berinjela/25 px-1">
+              <button
+                type="button"
+                onClick={() => alterar(sabor.numero, -1)}
+                aria-label={`Diminuir ${sabor.nome}`}
+                className="px-2 py-1.5 font-corpo text-lg font-bold text-berinjela disabled:opacity-30"
+                disabled={contagens[sabor.numero] === 0}
+              >
+                −
+              </button>
+              <span className="min-w-4 text-center font-corpo text-sm font-bold text-berinjela">
+                {contagens[sabor.numero]}
+              </span>
+              <button
+                type="button"
+                onClick={() => alterar(sabor.numero, 1)}
+                aria-label={`Aumentar ${sabor.nome}`}
+                className="px-2 py-1.5 font-corpo text-lg font-bold text-berinjela disabled:opacity-30"
+                disabled={total >= QUANTIDADE_CAIXA}
+              >
+                +
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <button
+        type="button"
+        onClick={adicionar}
+        disabled={restante !== 0}
+        className="mt-5 w-full rounded-sm bg-rosa px-7 py-3 font-corpo font-bold text-papel shadow-[3px_3px_0_rgba(67,48,59,0.25)] transition-transform enabled:hover:-translate-y-0.5 disabled:opacity-40"
+      >
+        adicionar caixa — {formatarPreco(CAIXA.preco)}
+      </button>
+    </div>
+  );
+}

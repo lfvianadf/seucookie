@@ -13,87 +13,90 @@ export function linkWhatsapp(mensagem: string) {
 export type Receita = {
   numero: string;
   nome: string;
+  peso: string;
   ingredientes: string;
   preco: number;
   status?: "saiu do forno" | "esse acabou hoje";
   favorito?: boolean;
+  ehCaixa?: boolean;
 };
 
-export const RECEITAS_DESTAQUE: Receita[] = [
+/** Os sabores — o caderno inteiro, por enquanto. */
+export const SABORES: Receita[] = [
   {
     numero: "01",
-    nome: "Chocolate da vó",
-    ingredientes: "manteiga, chocolate meio amargo, uma pitada de flor de sal",
-    preco: 12,
-    favorito: true,
+    nome: "tradicional",
+    peso: "100g",
+    ingredientes: "recheio de nutella",
+    preco: 12.9,
   },
   {
-    numero: "04",
-    nome: "Doce de leite e nozes",
-    ingredientes: "doce de leite cremoso, nozes tostadas, canela",
-    preco: 13,
+    numero: "02",
+    nome: "red velvet",
+    peso: "100g",
+    ingredientes: "recheio de chocolate branco",
+    preco: 12.9,
   },
   {
-    numero: "07",
-    nome: "Red velvet de colher",
-    ingredientes: "cacau, cream cheese, baunilha",
-    preco: 13,
-    status: "saiu do forno",
-  },
-  {
-    numero: "09",
-    nome: "Amendoim torrado",
-    ingredientes: "amendoim moído na hora, açúcar mascavo, toque de sal",
-    preco: 11,
-    status: "esse acabou hoje",
+    numero: "03",
+    nome: "churros",
+    peso: "100g",
+    ingredientes: "recheio de doce de leite e canela",
+    preco: 11.9,
   },
 ];
 
-export const CAPITULOS_CARDAPIO: {
-  titulo: string;
-  receitas: Receita[];
-}[] = [
-  {
-    titulo: "os clássicos",
-    receitas: [
-      RECEITAS_DESTAQUE[0],
-      {
-        numero: "02",
-        nome: "Baunilha e gotas de chocolate",
-        ingredientes: "baunilha bourbon, gotas de chocolate ao leite",
-        preco: 10,
-      },
-      {
-        numero: "03",
-        nome: "Aveia com passas",
-        ingredientes: "aveia em flocos, passas maceradas no rum",
-        preco: 10,
-      },
-    ],
-  },
-  {
-    titulo: "os atrevidos",
-    receitas: [
-      RECEITAS_DESTAQUE[1],
-      RECEITAS_DESTAQUE[2],
-      {
-        numero: "08",
-        nome: "Pimenta e chocolate",
-        ingredientes: "chocolate 70%, pimenta biquinho, flor de sal",
-        preco: 14,
-      },
-    ],
-  },
-  {
-    titulo: "os da estação",
-    receitas: [
-      RECEITAS_DESTAQUE[3],
-      {
-        numero: "10",
-        nome: "Coco queimado",
-        ingredientes: "coco fresco tostado, leite condensado",
-        preco: 12,
-      },
-    ],
-  },
-];
+export const QUANTIDADE_CAIXA = 4;
+
+export const CAIXA: Receita = {
+  numero: "04",
+  nome: "box com 4 cookies",
+  peso: "60g cada",
+  ingredientes: "monte a sua caixa — escolha os 4 sabores",
+  preco: 32.9,
+  ehCaixa: true,
+};
+
+export const RECEITAS: Receita[] = [...SABORES, CAIXA];
+
+export function formatarPreco(valor: number) {
+  return valor.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+}
+
+export type ComposicaoCaixa = {
+  numero: string;
+  nome: string;
+  quantidade: number;
+};
+
+export type ItemCarrinho = {
+  id: string;
+  numero: string;
+  nome: string;
+  peso: string;
+  preco: number;
+  quantidade: number;
+  composicao?: ComposicaoCaixa[];
+};
+
+export function montarMensagemPedido(itens: ItemCarrinho[], total: number) {
+  const linhas = itens.map((item) => {
+    const composicao = item.composicao
+      ?.map((c) => `${c.quantidade}x ${c.nome}`)
+      .join(", ");
+    const detalhe = composicao ? ` (${composicao})` : ` (${item.peso})`;
+    const subtotal = formatarPreco(item.preco * item.quantidade);
+    return `• ${item.quantidade}x nº${item.numero} ${item.nome}${detalhe} — ${subtotal}`;
+  });
+
+  return [
+    "Oi! Vim pelo site e queria fazer esse pedido:",
+    "",
+    ...linhas,
+    "",
+    `Total: ${formatarPreco(total)}`,
+  ].join("\n");
+}

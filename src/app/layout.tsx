@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import { Nunito_Sans, Caveat } from "next/font/google";
 import { CONTATO, SITE_URL } from "@/lib/site";
 import { BotaoFlutuante } from "@/components/BotaoFlutuante";
+import { CarrinhoPainel } from "@/components/CarrinhoPainel";
+import { CarrinhoProvider } from "@/context/CarrinhoContext";
 import "./globals.css";
 
 const epoche = localFont({
@@ -77,7 +79,7 @@ const jsonLd = {
   url: SITE_URL,
   image: `${SITE_URL}/cookie-hero.jpg`,
   telephone: `+${CONTATO.whatsapp}`,
-  priceRange: "R$ 9 - R$ 14",
+  priceRange: "R$ 11,90 - R$ 32,90",
   address: {
     "@type": "PostalAddress",
     addressLocality: CONTATO.cidade,
@@ -102,8 +104,11 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {children}
-        <BotaoFlutuante />
+        <CarrinhoProvider>
+          {children}
+          <BotaoFlutuante />
+          <CarrinhoPainel />
+        </CarrinhoProvider>
       </body>
     </html>
   );
