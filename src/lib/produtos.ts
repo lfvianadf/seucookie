@@ -29,6 +29,7 @@ function paraReceita(produto: ProdutoSupabase): Receita {
     foto: produto.foto_url ?? undefined,
     status: esgotado ? "esse acabou hoje" : undefined,
     estoque: esgotado ? 0 : produto.qtd_estoque ?? undefined,
+    capitulo: produto.capitulo ?? undefined,
   };
 }
 

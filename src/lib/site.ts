@@ -23,7 +23,22 @@ export type Receita = {
   foto?: string;
   /** Unidades em estoque — ausente = estoque não controlado (trata como ilimitado) */
   estoque?: number;
+  /** Capítulo/categoria do cardápio no Supabase — ausente cai na seção padrão "os sabores" */
+  capitulo?: string;
 };
+
+export const CAPITULO_PADRAO = "os sabores";
+
+/** Agrupa os sabores por capítulo, preservando a ordem de chegada (já vem ordenado por número). */
+export function agruparPorCapitulo(sabores: Receita[]) {
+  const grupos = new Map<string, Receita[]>();
+  for (const sabor of sabores) {
+    const chave = sabor.capitulo?.trim().toLowerCase() || CAPITULO_PADRAO;
+    if (!grupos.has(chave)) grupos.set(chave, []);
+    grupos.get(chave)!.push(sabor);
+  }
+  return [...grupos.entries()].map(([titulo, receitas]) => ({ titulo, receitas }));
+}
 
 export const QUANTIDADE_CAIXA = 4;
 

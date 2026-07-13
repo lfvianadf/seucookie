@@ -7,7 +7,7 @@ import { CardapioSabores } from "@/components/CardapioSabores";
 import { SeletorBox } from "@/components/SeletorBox";
 import { SeloStatus } from "@/components/SeloStatus";
 import { buscarCardapio } from "@/lib/produtos";
-import { caixaDisponivel } from "@/lib/site";
+import { agruparPorCapitulo, caixaDisponivel } from "@/lib/site";
 
 export const revalidate = 60;
 
@@ -35,6 +35,7 @@ export const metadata: Metadata = {
 export default async function CardapioPage() {
   const { sabores, caixa } = await buscarCardapio();
   const boxDisponivel = caixaDisponivel(caixa, sabores);
+  const capitulos = agruparPorCapitulo(sabores);
 
   return (
     <>
@@ -48,12 +49,14 @@ export default async function CardapioPage() {
             o cardápio
           </h1>
 
-          <section className="mt-16">
-            <h2 className="font-titulo text-2xl text-berinjela">
-              os sabores
-            </h2>
-            <CardapioSabores sabores={sabores} />
-          </section>
+          {capitulos.map((capitulo) => (
+            <section key={capitulo.titulo} className="mt-16">
+              <h2 className="font-titulo text-2xl text-berinjela">
+                {capitulo.titulo}
+              </h2>
+              <CardapioSabores sabores={capitulo.receitas} />
+            </section>
+          ))}
 
           <section className="mt-16 border-t border-berinjela/15 pt-16">
             <h2 className="font-titulo text-2xl text-berinjela">a caixa</h2>
