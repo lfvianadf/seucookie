@@ -12,18 +12,23 @@ export function IconeCesta({ className = "" }: IconeCestaProps) {
       fill="none"
     >
       <path
-        d="M5 12h22l-2.4 13.5a2 2 0 0 1-2 1.6H9.4a2 2 0 0 1-2-1.6L5 12Z"
+        d="M8 13h16l-1 12.3a2 2 0 0 1-2 1.7H11a2 2 0 0 1-2-1.7L8 13Z"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="2.5"
         strokeLinejoin="round"
       />
       <path
-        d="M11 12c0-4 2.2-6.5 5-6.5s5 2.5 5 6.5"
+        d="M12.5 13c0-3.6 1.6-6 3.5-6s3.5 2.4 3.5 6"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="2.5"
         strokeLinecap="round"
       />
-      <path d="M12 16.5v6M20 16.5v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M13 17.5v6M19 17.5v6"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }

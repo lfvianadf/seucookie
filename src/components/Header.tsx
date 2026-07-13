@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { BotaoCarrinho } from "./BotaoCarrinho";
 import { MenuMobile } from "./MenuMobile";
+import { NavPrincipal } from "./NavPrincipal";
 
 export function Header() {
   return (
@@ -18,22 +19,9 @@ export function Header() {
       </Link>
 
       <div className="flex items-center gap-5 sm:gap-6">
-        <nav className="hidden items-center gap-6 sm:flex">
-          <Link
-            href="/"
-            className="-my-3 inline-block py-3 font-corpo text-sm font-bold text-berinjela underline decoration-rosa decoration-2 underline-offset-4"
-          >
-            cardápio
-          </Link>
-          <Link
-            href="/conheca"
-            className="-my-3 inline-block py-3 font-corpo text-sm font-bold text-berinjela"
-          >
-            conheça o seu cookie
-          </Link>
-        </nav>
-        <BotaoCarrinho />
+        <NavPrincipal />
         <MenuMobile />
+        <BotaoCarrinho />
       </div>
     </header>
   );

@@ -2,12 +2,10 @@
 
 import { CarimboReceita } from "./CarimboReceita";
 import { FotoReceita } from "./FotoReceita";
-import { useCarrinho } from "@/context/CarrinhoContext";
+import { SeletorQuantidadeSabor } from "./SeletorQuantidadeSabor";
 import { SABORES, formatarPreco } from "@/lib/site";
 
 export function CardapioSabores() {
-  const { adicionarSabor } = useCarrinho();
-
   return (
     <ul className="mt-6 divide-y divide-berinjela/15 border-y border-berinjela/15 sm:divide-y-0 sm:border-none sm:grid sm:grid-cols-2 sm:gap-x-8 sm:gap-y-12 lg:grid-cols-3">
       {SABORES.map((sabor, i) => (
@@ -42,15 +40,7 @@ export function CardapioSabores() {
               <span className="font-corpo text-2xl font-bold text-rosa">
                 {formatarPreco(sabor.preco)}
               </span>
-              <button
-                type="button"
-                onClick={() => adicionarSabor(sabor)}
-                aria-label={`Adicionar ${sabor.nome} ao carrinho`}
-                className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-berinjela font-titulo text-2xl text-berinjela transition-transform hover:-translate-y-0.5"
-                style={{ borderStyle: "double" }}
-              >
-                +
-              </button>
+              <SeletorQuantidadeSabor sabor={sabor} tamanho="lg" />
             </div>
           </div>
 
@@ -58,15 +48,7 @@ export function CardapioSabores() {
             <span className="font-corpo text-lg font-bold text-berinjela">
               {formatarPreco(sabor.preco)}
             </span>
-            <button
-              type="button"
-              onClick={() => adicionarSabor(sabor)}
-              aria-label={`Adicionar ${sabor.nome} ao carrinho`}
-              className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-berinjela font-titulo text-lg text-berinjela"
-              style={{ borderStyle: "double" }}
-            >
-              +
-            </button>
+            <SeletorQuantidadeSabor sabor={sabor} tamanho="sm" />
           </div>
         </li>
       ))}
