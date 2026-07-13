@@ -82,9 +82,14 @@ export type ItemCarrinho = {
   preco: number;
   quantidade: number;
   composicao?: ComposicaoCaixa[];
+  produtoId?: string;
 };
 
-export function montarMensagemPedido(itens: ItemCarrinho[], total: number) {
+export function montarMensagemPedido(
+  itens: ItemCarrinho[],
+  total: number,
+  pedidoId?: string,
+) {
   const linhas = itens.map((item) => {
     const composicao = item.composicao
       ?.map((c) => `${c.quantidade}x ${c.nome}`)
@@ -101,5 +106,6 @@ export function montarMensagemPedido(itens: ItemCarrinho[], total: number) {
     ...linhas,
     "",
     `Total: ${formatarPreco(total)}`,
+    ...(pedidoId ? [`Pedido #${pedidoId.slice(0, 8)}`] : []),
   ].join("\n");
 }

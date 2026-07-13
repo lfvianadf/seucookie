@@ -76,6 +76,7 @@ export function CarrinhoProvider({ children }: { children: ReactNode }) {
           peso: receita.peso,
           preco: receita.preco,
           quantidade: 1,
+          produtoId: receita.produtoId,
         },
       ];
     });
@@ -100,6 +101,7 @@ export function CarrinhoProvider({ children }: { children: ReactNode }) {
           preco: caixa.preco,
           quantidade: 1,
           composicao,
+          produtoId: caixa.produtoId,
         },
       ];
     });
