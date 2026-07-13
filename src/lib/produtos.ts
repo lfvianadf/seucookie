@@ -43,8 +43,7 @@ export async function buscarCardapio(): Promise<Cardapio> {
       .from("produtos")
       .select("id, nome, numero_receita, descricao, preco, capitulo, foto_url")
       .eq("disponivel", true)
-      .order("capitulo", { ascending: true })
-      .order("nome", { ascending: true });
+      .order("numero_receita", { ascending: true });
 
     if (error) throw error;
     if (!data || data.length === 0) throw new Error("Cardápio vazio no Supabase");
