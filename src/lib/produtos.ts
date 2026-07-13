@@ -15,7 +15,6 @@ const NOME_CAIXA = "box de cookies";
 
 function paraReceita(produto: ProdutoSupabase): Receita {
   return {
-    produtoId: produto.id,
     numero:
       produto.numero_receita != null
         ? String(produto.numero_receita).padStart(2, "0")

@@ -19,8 +19,6 @@ export type Receita = {
   status?: "saiu do forno" | "esse acabou hoje";
   favorito?: boolean;
   ehCaixa?: boolean;
-  /** uuid do produto no Supabase — ausente quando o dado vem do fallback local */
-  produtoId?: string;
   /** URL da foto no Supabase Storage — ausente usa o placeholder padrão */
   foto?: string;
 };
@@ -82,14 +80,9 @@ export type ItemCarrinho = {
   preco: number;
   quantidade: number;
   composicao?: ComposicaoCaixa[];
-  produtoId?: string;
 };
 
-export function montarMensagemPedido(
-  itens: ItemCarrinho[],
-  total: number,
-  pedidoId?: string,
-) {
+export function montarMensagemPedido(itens: ItemCarrinho[], total: number) {
   const linhas = itens.map((item) => {
     const composicao = item.composicao
       ?.map((c) => `${c.quantidade}x ${c.nome}`)
@@ -106,6 +99,5 @@ export function montarMensagemPedido(
     ...linhas,
     "",
     `Total: ${formatarPreco(total)}`,
-    ...(pedidoId ? [`Pedido #${pedidoId.slice(0, 8)}`] : []),
   ].join("\n");
 }
