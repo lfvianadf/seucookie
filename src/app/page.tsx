@@ -5,7 +5,9 @@ import { CarimboReceita } from "@/components/CarimboReceita";
 import { FotoReceita } from "@/components/FotoReceita";
 import { CardapioSabores } from "@/components/CardapioSabores";
 import { SeletorBox } from "@/components/SeletorBox";
-import { CAIXA } from "@/lib/site";
+import { buscarCardapio } from "@/lib/produtos";
+
+export const revalidate = 60;
 
 const TITULO = "o cardápio";
 const DESCRICAO =
@@ -28,7 +30,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function CardapioPage() {
+export default async function CardapioPage() {
+  const { sabores, caixa } = await buscarCardapio();
+
   return (
     <>
       <Header />
@@ -45,7 +49,7 @@ export default function CardapioPage() {
             <h2 className="font-titulo text-2xl text-berinjela">
               os sabores
             </h2>
-            <CardapioSabores />
+            <CardapioSabores sabores={sabores} />
           </section>
 
           <section className="mt-16 border-t border-berinjela/15 pt-16">
@@ -54,24 +58,27 @@ export default function CardapioPage() {
             <div className="mt-6 grid grid-cols-1 gap-8 sm:grid-cols-12">
               <div className="relative sm:col-span-5">
                 <FotoReceita
+                  src={caixa.foto}
                   className="aspect-[4/3] w-full -rotate-1"
                   sizes="(min-width: 1024px) 24rem, 90vw"
                 />
                 <div className="absolute -bottom-6 -right-4">
-                  <CarimboReceita numero={CAIXA.numero} className="bg-papel" />
+                  <CarimboReceita numero={caixa.numero} className="bg-papel" />
                 </div>
               </div>
 
               <div className="sm:col-span-7">
                 <h3 className="font-titulo text-2xl text-berinjela">
-                  {CAIXA.nome}
+                  {caixa.nome}
                 </h3>
-                <p className="mt-1 font-corpo text-sm text-ameixa">
-                  {CAIXA.peso}
-                </p>
+                {caixa.peso && (
+                  <p className="mt-1 font-corpo text-sm text-ameixa">
+                    {caixa.peso}
+                  </p>
+                )}
 
                 <div className="mt-6">
-                  <SeletorBox />
+                  <SeletorBox caixa={caixa} sabores={sabores} />
                 </div>
               </div>
             </div>

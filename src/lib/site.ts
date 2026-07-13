@@ -13,16 +13,22 @@ export function linkWhatsapp(mensagem: string) {
 export type Receita = {
   numero: string;
   nome: string;
-  peso: string;
+  peso?: string;
   ingredientes: string;
   preco: number;
   status?: "saiu do forno" | "esse acabou hoje";
   favorito?: boolean;
   ehCaixa?: boolean;
+  /** uuid do produto no Supabase — ausente quando o dado vem do fallback local */
+  produtoId?: string;
+  /** URL da foto no Supabase Storage — ausente usa o placeholder padrão */
+  foto?: string;
 };
 
-/** Os sabores — o caderno inteiro, por enquanto. */
-export const SABORES: Receita[] = [
+export const QUANTIDADE_CAIXA = 4;
+
+/** Usados só se a busca no Supabase falhar ou vier vazia — ver src/lib/produtos.ts */
+export const SABORES_FALLBACK: Receita[] = [
   {
     numero: "01",
     nome: "tradicional",
@@ -46,9 +52,7 @@ export const SABORES: Receita[] = [
   },
 ];
 
-export const QUANTIDADE_CAIXA = 4;
-
-export const CAIXA: Receita = {
+export const CAIXA_FALLBACK: Receita = {
   numero: "04",
   nome: "box com 4 cookies",
   peso: "60g cada",
@@ -56,8 +60,6 @@ export const CAIXA: Receita = {
   preco: 32.9,
   ehCaixa: true,
 };
-
-export const RECEITAS: Receita[] = [...SABORES, CAIXA];
 
 export function formatarPreco(valor: number) {
   return valor.toLocaleString("pt-BR", {
@@ -76,7 +78,7 @@ export type ItemCarrinho = {
   id: string;
   numero: string;
   nome: string;
-  peso: string;
+  peso?: string;
   preco: number;
   quantidade: number;
   composicao?: ComposicaoCaixa[];
@@ -87,7 +89,8 @@ export function montarMensagemPedido(itens: ItemCarrinho[], total: number) {
     const composicao = item.composicao
       ?.map((c) => `${c.quantidade}x ${c.nome}`)
       .join(", ");
-    const detalhe = composicao ? ` (${composicao})` : ` (${item.peso})`;
+    const dentroParenteses = composicao || item.peso;
+    const detalhe = dentroParenteses ? ` (${dentroParenteses})` : "";
     const subtotal = formatarPreco(item.preco * item.quantidade);
     return `• ${item.quantidade}x nº${item.numero} ${item.nome}${detalhe} — ${subtotal}`;
   });

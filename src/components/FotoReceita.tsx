@@ -6,10 +6,15 @@ import Image from "next/image";
 type FotoReceitaProps = {
   className?: string;
   sizes?: string;
+  src?: string;
 };
 
 /** Thumbnail de receita, com borda tracejada de caderno. Clicar expande a foto em tela cheia. */
-export function FotoReceita({ className = "", sizes = "4rem" }: FotoReceitaProps) {
+export function FotoReceita({
+  className = "",
+  sizes = "4rem",
+  src = "/cookie-hero.jpg",
+}: FotoReceitaProps) {
   const [aberta, setAberta] = useState(false);
 
   return (
@@ -20,13 +25,7 @@ export function FotoReceita({ className = "", sizes = "4rem" }: FotoReceitaProps
         aria-label="Ver foto em tela cheia"
         className={`borda-picote relative aspect-square w-16 shrink-0 overflow-hidden bg-massa ${className}`}
       >
-        <Image
-          src="/cookie-hero.jpg"
-          alt=""
-          fill
-          sizes={sizes}
-          className="object-cover"
-        />
+        <Image src={src} alt="" fill sizes={sizes} className="object-cover" />
       </button>
 
       {aberta && (
@@ -49,7 +48,7 @@ export function FotoReceita({ className = "", sizes = "4rem" }: FotoReceitaProps
             className="relative aspect-square w-full max-w-lg"
           >
             <Image
-              src="/cookie-hero.jpg"
+              src={src}
               alt="Cookie recém-feito, recheio derretendo"
               fill
               sizes="100vw"

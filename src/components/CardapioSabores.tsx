@@ -3,18 +3,23 @@
 import { CarimboReceita } from "./CarimboReceita";
 import { FotoReceita } from "./FotoReceita";
 import { SeletorQuantidadeSabor } from "./SeletorQuantidadeSabor";
-import { SABORES, formatarPreco } from "@/lib/site";
+import { formatarPreco, type Receita } from "@/lib/site";
 
-export function CardapioSabores() {
+type CardapioSaboresProps = {
+  sabores: Receita[];
+};
+
+export function CardapioSabores({ sabores }: CardapioSaboresProps) {
   return (
     <ul className="mt-6 divide-y divide-berinjela/15 border-y border-berinjela/15 sm:divide-y-0 sm:border-none sm:grid sm:grid-cols-2 sm:gap-x-8 sm:gap-y-12 lg:grid-cols-3">
-      {SABORES.map((sabor, i) => (
+      {sabores.map((sabor, i) => (
         <li
           key={sabor.numero}
           className="flex items-center gap-5 py-5 sm:flex-col sm:items-stretch sm:gap-0 sm:py-0"
         >
           <div className="relative shrink-0 sm:w-full">
             <FotoReceita
+              src={sabor.foto}
               className={`-rotate-2 sm:aspect-[4/3] sm:w-full ${
                 i % 2 === 0 ? "sm:-rotate-1" : "sm:rotate-1"
               }`}
@@ -33,7 +38,8 @@ export function CardapioSabores() {
               {sabor.nome}
             </span>
             <p className="mt-1 font-corpo text-sm text-ameixa sm:mt-2 sm:text-base">
-              {sabor.ingredientes} · {sabor.peso}
+              {sabor.ingredientes}
+              {sabor.peso ? ` · ${sabor.peso}` : ""}
             </p>
 
             <div className="mt-3 hidden items-center justify-between sm:flex">

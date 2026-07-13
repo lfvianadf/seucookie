@@ -3,9 +3,13 @@ import { CarimboReceita } from "./CarimboReceita";
 import { FotoReceita } from "./FotoReceita";
 import { TracoManuscrito } from "./TracoManuscrito";
 import { TornEdge } from "./TornEdge";
-import { RECEITAS, formatarPreco } from "@/lib/site";
+import { formatarPreco, type Receita } from "@/lib/site";
 
-export function ReceitasDestaque() {
+type ReceitasDestaqueProps = {
+  receitas: Receita[];
+};
+
+export function ReceitasDestaque({ receitas }: ReceitasDestaqueProps) {
   return (
     <section className="relative px-6 py-20 sm:px-10 sm:py-28">
       <TornEdge cor="var(--massa)" variante={1} />
@@ -27,7 +31,7 @@ export function ReceitasDestaque() {
         </p>
 
         <ul className="mt-10 divide-y divide-berinjela/15 border-y border-berinjela/15">
-          {RECEITAS.map((receita, i) => (
+          {receitas.map((receita, i) => (
             <li
               key={receita.numero}
               className={`flex items-center gap-5 py-5 ${
@@ -35,7 +39,7 @@ export function ReceitasDestaque() {
               }`}
             >
               <div className="relative shrink-0">
-                <FotoReceita className="-rotate-2" />
+                <FotoReceita src={receita.foto} className="-rotate-2" />
                 <div className="absolute bottom-0 -right-3 hidden sm:block sm:-bottom-5 sm:-right-5">
                   <CarimboReceita numero={receita.numero} className="bg-papel" />
                 </div>
@@ -48,7 +52,8 @@ export function ReceitasDestaque() {
                   {receita.nome}
                 </span>
                 <p className="mt-1 font-corpo text-sm text-ameixa">
-                  {receita.ingredientes} · {receita.peso}
+                  {receita.ingredientes}
+                  {receita.peso ? ` · ${receita.peso}` : ""}
                 </p>
               </div>
               <span className="font-corpo text-lg font-bold text-berinjela sm:text-rosa">

@@ -66,9 +66,11 @@ export function CarrinhoPainel() {
                             .join(", ")}
                         </p>
                       ) : (
-                        <p className="mt-0.5 font-corpo text-xs text-ameixa">
-                          {item.peso}
-                        </p>
+                        item.peso && (
+                          <p className="mt-0.5 font-corpo text-xs text-ameixa">
+                            {item.peso}
+                          </p>
+                        )
                       )}
                     </div>
                     <button

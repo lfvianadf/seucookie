@@ -5,6 +5,9 @@ import { NossaHistoria } from "@/components/NossaHistoria";
 import { ReceitasDestaque } from "@/components/ReceitasDestaque";
 import { ComoLevar } from "@/components/ComoLevar";
 import { Footer } from "@/components/Footer";
+import { buscarCardapio } from "@/lib/produtos";
+
+export const revalidate = 60;
 
 const TITULO = "conheça o seu cookie";
 const DESCRICAO =
@@ -27,14 +30,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ConhecaPage() {
+export default async function ConhecaPage() {
+  const { sabores, caixa } = await buscarCardapio();
+
   return (
     <>
       <Header />
       <main>
         <Hero />
         <NossaHistoria />
-        <ReceitasDestaque />
+        <ReceitasDestaque receitas={[...sabores, caixa]} />
         <ComoLevar />
       </main>
       <Footer />

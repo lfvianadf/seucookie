@@ -2,15 +2,18 @@
 
 import { useState } from "react";
 import { useCarrinho } from "@/context/CarrinhoContext";
-import { CAIXA, QUANTIDADE_CAIXA, SABORES, formatarPreco } from "@/lib/site";
+import { QUANTIDADE_CAIXA, formatarPreco, type Receita } from "@/lib/site";
 
-function contagemInicial() {
-  return Object.fromEntries(SABORES.map((s) => [s.numero, 0]));
-}
+type SeletorBoxProps = {
+  caixa: Receita;
+  sabores: Receita[];
+};
 
-export function SeletorBox() {
+export function SeletorBox({ caixa, sabores }: SeletorBoxProps) {
   const { adicionarCaixa } = useCarrinho();
-  const [contagens, setContagens] = useState<Record<string, number>>(contagemInicial);
+  const [contagens, setContagens] = useState<Record<string, number>>(() =>
+    Object.fromEntries(sabores.map((s) => [s.numero, 0])),
+  );
 
   const total = Object.values(contagens).reduce((a, b) => a + b, 0);
   const restante = QUANTIDADE_CAIXA - total;
@@ -26,13 +29,15 @@ export function SeletorBox() {
   }
 
   function adicionar() {
-    const composicao = SABORES.filter((s) => contagens[s.numero] > 0).map((s) => ({
-      numero: s.numero,
-      nome: s.nome,
-      quantidade: contagens[s.numero],
-    }));
-    adicionarCaixa(CAIXA, composicao);
-    setContagens(contagemInicial());
+    const composicao = sabores
+      .filter((s) => contagens[s.numero] > 0)
+      .map((s) => ({
+        numero: s.numero,
+        nome: s.nome,
+        quantidade: contagens[s.numero],
+      }));
+    adicionarCaixa(caixa, composicao);
+    setContagens(Object.fromEntries(sabores.map((s) => [s.numero, 0])));
   }
 
   return (
@@ -43,7 +48,7 @@ export function SeletorBox() {
       </p>
 
       <ul className="mt-5 divide-y divide-berinjela/15 border-y border-berinjela/15">
-        {SABORES.map((sabor) => (
+        {sabores.map((sabor) => (
           <li key={sabor.numero} className="flex items-center justify-between gap-3 py-4">
             <span className="font-titulo text-xl text-berinjela">
               {sabor.nome}
@@ -81,7 +86,7 @@ export function SeletorBox() {
         disabled={restante !== 0}
         className="mt-5 w-full rounded-sm bg-rosa px-7 py-3 font-corpo font-bold text-papel shadow-[3px_3px_0_rgba(67,48,59,0.25)] transition-transform enabled:hover:-translate-y-0.5 disabled:opacity-40"
       >
-        adicionar caixa — {formatarPreco(CAIXA.preco)}
+        adicionar caixa — {formatarPreco(caixa.preco)}
       </button>
     </div>
   );
