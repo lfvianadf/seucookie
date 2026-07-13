@@ -2,12 +2,19 @@
 
 > Um caderno de receitas de família que virou loja. Cookies artesanais, feitos à mão, em Natal (RN), Brasil.
 
-seu cookie vende cookies recheados feitos sob encomenda. Cada sabor é uma "receita numerada" de um caderno de família que cresce com o tempo. Pedidos são feitos por conversa direta no WhatsApp — não há carrinho ou checkout online. Retirada, entrega na região de Natal e encomendas para festas.
+seu cookie vende cookies recheados: três sabores fixos e uma caixa com 4 cookies à escolha do cliente. O site tem um carrinho de compras simples — o cliente monta o pedido pelo site e finaliza pelo WhatsApp, onde a mensagem já sai com os itens e o total. Não há pagamento online nem checkout com cartão; o pagamento é combinado por WhatsApp. Retirada, entrega na região de Natal e encomendas para festas.
 
 ## Páginas
 
-- [Página inicial](https://seucookiebr.com.br/): a história da marca, receitas em destaque e como comprar.
-- [Cardápio completo](https://seucookiebr.com.br/cardapio): todas as receitas, organizadas por capítulo ("os clássicos", "os atrevidos", "os da estação"), com ingredientes e preços de R$ 9 a R$ 14.
+- [Cardápio / início](https://seucookiebr.com.br/): a página inicial do site já é a loja — os 3 sabores, a caixa de 4 cookies (montada escolhendo os sabores) e o carrinho de compras.
+- [Conheça o seu cookie](https://seucookiebr.com.br/conheca): a história da marca, a origem do nome e como funciona a entrega/retirada.
+
+## Cardápio atual
+
+- nº01 tradicional (100g, recheio de nutella) — R$ 12,90
+- nº02 red velvet (100g, recheio de chocolate branco) — R$ 12,90
+- nº03 churros (100g, recheio de doce de leite e canela) — R$ 11,90
+- nº04 box com 4 cookies (60g cada, sabores à escolha entre os três acima) — R$ 32,90
 
 ## Contato
 
@@ -17,5 +24,5 @@ seu cookie vende cookies recheados feitos sob encomenda. Cada sabor é uma "rece
 
 ## Notas para agentes e crawlers
 
-- Preços e disponibilidade mudam com frequência (itens esgotam no mesmo dia). Trate o cardápio do site como a fonte mais atual, não como um valor fixo.
-- Não há loja física de varejo nem cardápio de terceiros (iFood, apps de delivery) — o único canal de pedido é o WhatsApp acima.
+- Preços e sabores mudam com o tempo. Trate o cardápio do site como a fonte mais atual, não como um valor fixo.
+- Não há loja física de varejo nem cardápio de terceiros (iFood, apps de delivery) — o pedido é feito pelo carrinho do site e finalizado no WhatsApp acima.

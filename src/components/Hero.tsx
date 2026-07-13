@@ -25,7 +25,7 @@ export function Hero() {
           </p>
           <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-5">
             <Link
-              href="/cardapio"
+              href="/"
               className="inline-block rounded-sm bg-rosa px-7 py-3 font-corpo font-bold text-papel shadow-[3px_3px_0_rgba(67,48,59,0.25)] transition-transform hover:-translate-y-0.5"
             >
               peça o seu

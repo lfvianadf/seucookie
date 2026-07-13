@@ -1,10 +1,10 @@
 import { renderOgImage, OG_SIZE } from "@/lib/og";
 
 export const runtime = "nodejs";
-export const alt = "seu cookie — um caderno de receitas que virou loja";
+export const alt = "o cardápio — seu cookie";
 export const size = OG_SIZE;
 export const contentType = "image/png";
 
 export default function Image() {
-  return renderOgImage("seu cookie.", "um caderno de receitas que virou loja.");
+  return renderOgImage("o cardápio.", "o caderno inteiro, aberto — receita por receita.");
 }

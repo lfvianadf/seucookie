@@ -10,7 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: `${SITE_URL}/cardapio`,
+      url: `${SITE_URL}/conheca`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,

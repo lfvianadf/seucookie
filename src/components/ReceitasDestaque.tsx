@@ -18,7 +18,7 @@ export function ReceitasDestaque() {
         <p className="ml-4 mt-3 font-corpo text-ameixa sm:ml-10">
           três sabores e uma caixa pra montar do seu jeito. o pedido é{" "}
           <Link
-            href="/cardapio"
+            href="/"
             className="font-bold text-berinjela underline decoration-rosa decoration-2 underline-offset-4"
           >
             aqui
