@@ -5,7 +5,9 @@ import { CarimboReceita } from "@/components/CarimboReceita";
 import { FotoReceita } from "@/components/FotoReceita";
 import { CardapioSabores } from "@/components/CardapioSabores";
 import { SeletorBox } from "@/components/SeletorBox";
+import { SeloStatus } from "@/components/SeloStatus";
 import { buscarCardapio } from "@/lib/produtos";
+import { caixaDisponivel } from "@/lib/site";
 
 export const revalidate = 60;
 
@@ -32,6 +34,7 @@ export const metadata: Metadata = {
 
 export default async function CardapioPage() {
   const { sabores, caixa } = await buscarCardapio();
+  const boxDisponivel = caixaDisponivel(caixa, sabores);
 
   return (
     <>
@@ -55,11 +58,17 @@ export default async function CardapioPage() {
           <section className="mt-16 border-t border-berinjela/15 pt-16">
             <h2 className="font-titulo text-2xl text-berinjela">a caixa</h2>
 
-            <div className="mt-6 grid grid-cols-1 gap-8 sm:grid-cols-12">
+            <div
+              className={`mt-6 grid grid-cols-1 gap-8 sm:grid-cols-12 ${
+                boxDisponivel ? "" : "opacity-60"
+              }`}
+            >
               <div className="relative sm:col-span-5">
                 <FotoReceita
                   src={caixa.foto}
-                  className="aspect-[4/3] w-full -rotate-1"
+                  className={`aspect-[4/3] w-full -rotate-1 ${
+                    boxDisponivel ? "" : "grayscale"
+                  }`}
                   sizes="(min-width: 1024px) 24rem, 90vw"
                 />
                 <div className="absolute -bottom-6 -right-4">
@@ -68,9 +77,14 @@ export default async function CardapioPage() {
               </div>
 
               <div className="sm:col-span-7">
-                <h3 className="font-titulo text-2xl text-berinjela">
-                  {caixa.nome}
-                </h3>
+                <div className="flex flex-wrap items-center gap-3">
+                  <h3 className="font-titulo text-2xl text-berinjela">
+                    {caixa.nome}
+                  </h3>
+                  {!boxDisponivel && (
+                    <SeloStatus variante="esgotado">esse acabou hoje</SeloStatus>
+                  )}
+                </div>
                 {caixa.ingredientes && (
                   <p className="mt-1 font-corpo text-sm text-ameixa">
                     {caixa.ingredientes}

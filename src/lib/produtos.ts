@@ -9,11 +9,14 @@ export type ProdutoSupabase = {
   preco: number;
   capitulo: string | null;
   foto_url: string | null;
+  qtd_estoque: number | null;
+  disponivel: boolean;
 };
 
 const NOME_CAIXA = "box de cookies";
 
 function paraReceita(produto: ProdutoSupabase): Receita {
+  const esgotado = produto.qtd_estoque === 0 || produto.disponivel === false;
   return {
     numero:
       produto.numero_receita != null
@@ -24,6 +27,8 @@ function paraReceita(produto: ProdutoSupabase): Receita {
     preco: produto.preco,
     ehCaixa: produto.nome.trim().toLowerCase() === NOME_CAIXA,
     foto: produto.foto_url ?? undefined,
+    status: esgotado ? "esse acabou hoje" : undefined,
+    estoque: esgotado ? 0 : produto.qtd_estoque ?? undefined,
   };
 }
 
@@ -41,8 +46,9 @@ export async function buscarCardapio(): Promise<Cardapio> {
   try {
     const { data, error } = await supabase
       .from("produtos")
-      .select("id, nome, numero_receita, descricao, preco, capitulo, foto_url")
-      .eq("disponivel", true)
+      .select(
+        "id, nome, numero_receita, descricao, preco, capitulo, foto_url, qtd_estoque, disponivel",
+      )
       .order("numero_receita", { ascending: true });
 
     if (error) throw error;

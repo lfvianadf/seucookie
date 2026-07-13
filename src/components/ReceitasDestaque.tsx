@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CarimboReceita } from "./CarimboReceita";
 import { FotoReceita } from "./FotoReceita";
+import { SeloStatus } from "./SeloStatus";
 import { TracoManuscrito } from "./TracoManuscrito";
 import { TornEdge } from "./TornEdge";
 import { formatarPreco, type Receita } from "@/lib/site";
@@ -31,36 +32,47 @@ export function ReceitasDestaque({ receitas }: ReceitasDestaqueProps) {
         </p>
 
         <ul className="mt-10 divide-y divide-berinjela/15 border-y border-berinjela/15">
-          {receitas.map((receita, i) => (
-            <li
-              key={receita.numero}
-              className={`flex items-center gap-5 py-5 ${
-                i % 2 === 0 ? "sm:pl-0" : "pl-6 sm:pl-10"
-              }`}
-            >
-              <div className="relative shrink-0">
-                <FotoReceita src={receita.foto} className="-rotate-2" />
-                <div className="absolute bottom-0 -right-3 hidden sm:block sm:-bottom-5 sm:-right-5">
-                  <CarimboReceita numero={receita.numero} className="bg-papel" />
+          {receitas.map((receita, i) => {
+            const esgotado = Boolean(receita.status);
+            return (
+              <li
+                key={receita.numero}
+                className={`flex items-center gap-5 py-5 ${
+                  i % 2 === 0 ? "sm:pl-0" : "pl-6 sm:pl-10"
+                } ${esgotado ? "opacity-60" : ""}`}
+              >
+                <div className="relative shrink-0">
+                  <FotoReceita
+                    src={receita.foto}
+                    className={`-rotate-2 ${esgotado ? "grayscale" : ""}`}
+                  />
+                  <div className="absolute bottom-0 -right-3 hidden sm:block sm:-bottom-5 sm:-right-5">
+                    <CarimboReceita numero={receita.numero} className="bg-papel" />
+                  </div>
                 </div>
-              </div>
-              <div className="min-w-0 flex-1">
-                <h3 className="font-titulo text-2xl text-berinjela sm:hidden">
-                  nº {receita.numero}
-                </h3>
-                <span className="mt-1 block font-corpo text-xs font-bold uppercase tracking-wide text-ameixa">
-                  {receita.nome}
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                    <h3 className="font-titulo text-2xl text-berinjela sm:hidden">
+                      nº {receita.numero}
+                    </h3>
+                    {receita.status && (
+                      <SeloStatus variante="esgotado">{receita.status}</SeloStatus>
+                    )}
+                  </div>
+                  <span className="mt-1 block font-corpo text-xs font-bold uppercase tracking-wide text-ameixa">
+                    {receita.nome}
+                  </span>
+                  <p className="mt-1 font-corpo text-sm text-ameixa">
+                    {receita.ingredientes}
+                    {receita.peso ? ` · ${receita.peso}` : ""}
+                  </p>
+                </div>
+                <span className="font-corpo text-lg font-bold text-berinjela sm:text-rosa">
+                  {formatarPreco(receita.preco)}
                 </span>
-                <p className="mt-1 font-corpo text-sm text-ameixa">
-                  {receita.ingredientes}
-                  {receita.peso ? ` · ${receita.peso}` : ""}
-                </p>
-              </div>
-              <span className="font-corpo text-lg font-bold text-berinjela sm:text-rosa">
-                {formatarPreco(receita.preco)}
-              </span>
-            </li>
-          ))}
+              </li>
+            );
+          })}
         </ul>
       </div>
     </section>
