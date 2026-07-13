@@ -71,9 +71,10 @@ export default async function CardapioPage() {
                 <h3 className="font-titulo text-2xl text-berinjela">
                   {caixa.nome}
                 </h3>
-                {caixa.peso && (
+                {caixa.ingredientes && (
                   <p className="mt-1 font-corpo text-sm text-ameixa">
-                    {caixa.peso}
+                    {caixa.ingredientes}
+                    {caixa.peso ? ` · ${caixa.peso}` : ""}
                   </p>
                 )}
 
