@@ -7,7 +7,7 @@ import { CardapioSabores } from "@/components/CardapioSabores";
 import { SeletorBox } from "@/components/SeletorBox";
 import { SeloStatus } from "@/components/SeloStatus";
 import { buscarCardapio } from "@/lib/produtos";
-import { agruparPorCapitulo, caixaDisponivel } from "@/lib/site";
+import { agruparPorCapitulo } from "@/lib/site";
 
 export const revalidate = 60;
 
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
 };
 
 export default async function CardapioPage() {
-  const { sabores, caixa } = await buscarCardapio();
-  const boxDisponivel = caixaDisponivel(caixa, sabores);
+  const { sabores, caixa, saboresDaCaixa } = await buscarCardapio();
+  const boxDisponivel = !caixa.status;
   const capitulos = agruparPorCapitulo(sabores);
 
   return (
@@ -96,7 +96,7 @@ export default async function CardapioPage() {
                 )}
 
                 <div className="mt-6">
-                  <SeletorBox caixa={caixa} sabores={sabores} />
+                  <SeletorBox caixa={caixa} sabores={saboresDaCaixa} />
                 </div>
               </div>
             </div>

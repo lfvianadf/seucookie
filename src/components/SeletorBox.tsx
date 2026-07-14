@@ -2,12 +2,7 @@
 
 import { useState } from "react";
 import { useCarrinho } from "@/context/CarrinhoContext";
-import {
-  QUANTIDADE_CAIXA,
-  caixaDisponivel,
-  formatarPreco,
-  type Receita,
-} from "@/lib/site";
+import { QUANTIDADE_CAIXA, formatarPreco, type Receita } from "@/lib/site";
 
 type SeletorBoxProps = {
   caixa: Receita;
@@ -22,7 +17,7 @@ export function SeletorBox({ caixa, sabores }: SeletorBoxProps) {
 
   const total = Object.values(contagens).reduce((a, b) => a + b, 0);
   const restante = QUANTIDADE_CAIXA - total;
-  const disponivel = caixaDisponivel(caixa, sabores);
+  const disponivel = !caixa.status;
 
   function alterar(numero: string, delta: number) {
     setContagens((atual) => {

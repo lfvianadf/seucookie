@@ -42,16 +42,6 @@ export function agruparPorCapitulo(sabores: Receita[]) {
 
 export const QUANTIDADE_CAIXA = 4;
 
-/** A caixa só fica disponível se o estoque somado dos sabores der pra montar as 4 unidades. */
-export function caixaDisponivel(caixa: Receita, sabores: Receita[]) {
-  if (caixa.status) return false;
-  const estoqueTotal = sabores.reduce(
-    (soma, sabor) => soma + (sabor.estoque ?? Infinity),
-    0,
-  );
-  return estoqueTotal >= QUANTIDADE_CAIXA;
-}
-
 /** Usados só se a busca no Supabase falhar ou vier vazia — ver src/lib/produtos.ts */
 export const SABORES_FALLBACK: Receita[] = [
   {

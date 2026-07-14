@@ -11,9 +11,8 @@ export type ProdutoSupabase = {
   foto_url: string | null;
   qtd_estoque: number | null;
   disponivel: boolean;
+  tipo_produto: "cookie" | "box";
 };
-
-const NOME_CAIXA = "box de cookies";
 
 function paraReceita(produto: ProdutoSupabase): Receita {
   const esgotado = produto.qtd_estoque === 0 || produto.disponivel === false;
@@ -25,7 +24,7 @@ function paraReceita(produto: ProdutoSupabase): Receita {
     nome: produto.nome,
     ingredientes: produto.descricao ?? "",
     preco: produto.preco,
-    ehCaixa: produto.nome.trim().toLowerCase() === NOME_CAIXA,
+    ehCaixa: produto.tipo_produto === "box",
     foto: produto.foto_url ?? undefined,
     status: esgotado ? "esse acabou hoje" : undefined,
     estoque: esgotado ? 0 : produto.qtd_estoque ?? undefined,
@@ -34,8 +33,11 @@ function paraReceita(produto: ProdutoSupabase): Receita {
 }
 
 export type Cardapio = {
+  /** Todos os cookies — usado na listagem "os sabores" / por capítulo. */
   sabores: Receita[];
   caixa: Receita;
+  /** Só os cookies liberados pra essa caixa (produto_box_itens). */
+  saboresDaCaixa: Receita[];
 };
 
 /**
@@ -48,22 +50,38 @@ export async function buscarCardapio(): Promise<Cardapio> {
     const { data, error } = await supabase
       .from("produtos")
       .select(
-        "id, nome, numero_receita, descricao, preco, capitulo, foto_url, qtd_estoque, disponivel",
+        "id, nome, numero_receita, descricao, preco, capitulo, foto_url, qtd_estoque, disponivel, tipo_produto",
       )
       .order("numero_receita", { ascending: true });
 
     if (error) throw error;
     if (!data || data.length === 0) throw new Error("Cardápio vazio no Supabase");
 
-    const receitas = data.map(paraReceita);
-    const caixa = receitas.find((r) => r.ehCaixa);
-    const sabores = receitas.filter((r) => !r.ehCaixa);
+    const caixaProduto = data.find((p) => p.tipo_produto === "box");
+    if (!caixaProduto) throw new Error('Nenhum produto do tipo "box" encontrado');
 
-    if (!caixa) throw new Error('Nenhum produto chamado "Box de cookies" encontrado');
+    const sabores = data.filter((p) => p.tipo_produto === "cookie").map(paraReceita);
+    const caixa = paraReceita(caixaProduto);
 
-    return { sabores, caixa };
+    const { data: itensBox, error: itensBoxError } = await supabase
+      .from("produto_box_itens")
+      .select("cookie_id")
+      .eq("box_id", caixaProduto.id);
+
+    if (itensBoxError) throw itensBoxError;
+
+    const idsPermitidos = new Set((itensBox ?? []).map((item) => item.cookie_id));
+    const saboresDaCaixa = data
+      .filter((p) => idsPermitidos.has(p.id))
+      .map(paraReceita);
+
+    return { sabores, caixa, saboresDaCaixa };
   } catch (err) {
     console.error("Falha ao buscar cardápio no Supabase, usando fallback local:", err);
-    return { sabores: SABORES_FALLBACK, caixa: CAIXA_FALLBACK };
+    return {
+      sabores: SABORES_FALLBACK,
+      caixa: CAIXA_FALLBACK,
+      saboresDaCaixa: SABORES_FALLBACK,
+    };
   }
 }
