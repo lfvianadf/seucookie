@@ -15,7 +15,13 @@ export type ProdutoSupabase = {
 };
 
 function paraReceita(produto: ProdutoSupabase): Receita {
-  const esgotado = produto.qtd_estoque === 0 || produto.disponivel === false;
+  // a box não tem estoque próprio (qtd_estoque nela é sempre 0/irrelevante) —
+  // a disponibilidade dela já vem pronta e calculada no campo `disponivel`.
+  const esgotado =
+    produto.tipo_produto === "box"
+      ? produto.disponivel === false
+      : produto.qtd_estoque === 0 || produto.disponivel === false;
+
   return {
     numero:
       produto.numero_receita != null
@@ -27,7 +33,12 @@ function paraReceita(produto: ProdutoSupabase): Receita {
     ehCaixa: produto.tipo_produto === "box",
     foto: produto.foto_url ?? undefined,
     status: esgotado ? "esse acabou hoje" : undefined,
-    estoque: esgotado ? 0 : produto.qtd_estoque ?? undefined,
+    estoque:
+      produto.tipo_produto === "box"
+        ? undefined
+        : esgotado
+          ? 0
+          : produto.qtd_estoque ?? undefined,
     capitulo: produto.capitulo ?? undefined,
   };
 }
