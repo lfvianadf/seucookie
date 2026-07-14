@@ -4,10 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-const LINKS = [
-  { href: "/", rotulo: "cardápio" },
-  { href: "/conheca", rotulo: "conheça o seu cookie" },
-];
+// "conheça o seu cookie" removido da nav por enquanto — a página /conheca
+// continua no ar, só não está linkada aqui. Reative adicionando o item de
+// volta neste array quando for a hora.
+const LINKS = [{ href: "/", rotulo: "cardápio" }];
 
 export function NavPrincipal() {
   const pathname = usePathname();
