@@ -59,7 +59,7 @@ export default async function CardapioPage() {
           ))}
 
           <section className="mt-16 border-t border-berinjela/15 pt-16">
-            <h2 className="font-titulo text-2xl text-berinjela">a caixa</h2>
+            <h2 className="font-titulo text-2xl text-berinjela">combos</h2>
 
             <div
               className={`mt-6 grid grid-cols-1 gap-8 sm:grid-cols-12 ${
