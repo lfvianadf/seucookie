@@ -54,7 +54,7 @@ export function SeletorBox({ caixa, sabores }: SeletorBoxProps) {
   return (
     <div>
       <p className="font-corpo text-sm text-ameixa">
-        escolha os {QUANTIDADE_CAIXA} cookies da caixa
+        escolha os {QUANTIDADE_CAIXA} cookies
         {restante > 0 ? ` — falta${restante === 1 ? "" : "m"} ${restante}` : " — pronta!"}
       </p>
 
