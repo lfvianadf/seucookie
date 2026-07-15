@@ -112,7 +112,7 @@ export function SeletorBox({ caixa, sabores }: SeletorBoxProps) {
         disabled={restante !== 0}
         className="mt-5 w-full rounded-sm bg-rosa px-7 py-3 font-corpo font-bold text-papel shadow-[3px_3px_0_rgba(67,48,59,0.25)] transition-transform enabled:hover:-translate-y-0.5 disabled:opacity-40"
       >
-        adicionar caixa — {formatarPreco(caixa.preco)}
+        adicionar — {formatarPreco(caixa.preco)}
       </button>
     </div>
   );
