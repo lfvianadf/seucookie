@@ -72,9 +72,9 @@ export function SeletorBox({ caixa, sabores }: SeletorBoxProps) {
             >
               <span className="flex items-center gap-2 font-titulo text-xl text-berinjela">
                 {sabor.nome}
-                {esgotado && (
+                {sabor.status && (
                   <span className="font-corpo text-xs font-bold uppercase tracking-wide text-ameixa">
-                    esgotado
+                    {sabor.status}
                   </span>
                 )}
               </span>

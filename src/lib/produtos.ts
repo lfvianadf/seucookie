@@ -32,7 +32,7 @@ function paraReceita(produto: ProdutoSupabase): Receita {
     preco: produto.preco,
     ehCaixa: produto.tipo_produto === "box",
     foto: produto.foto_url ?? undefined,
-    status: esgotado ? "esse acabou hoje" : undefined,
+    status: esgotado ? "esse acabou :(" : undefined,
     estoque:
       produto.tipo_produto === "box"
         ? undefined

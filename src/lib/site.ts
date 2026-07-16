@@ -16,7 +16,7 @@ export type Receita = {
   peso?: string;
   ingredientes: string;
   preco: number;
-  status?: "saiu do forno" | "esse acabou hoje";
+  status?: "saiu do forno" | "esse acabou :(";
   favorito?: boolean;
   ehCaixa?: boolean;
   /** URL da foto no Supabase Storage — ausente usa o placeholder padrão */

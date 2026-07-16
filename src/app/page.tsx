@@ -85,7 +85,7 @@ export default async function CardapioPage() {
                     {caixa.nome}
                   </h3>
                   {!boxDisponivel && (
-                    <SeloStatus variante="esgotado">esse acabou hoje</SeloStatus>
+                    <SeloStatus variante="esgotado">esse acabou :(</SeloStatus>
                   )}
                 </div>
                 {caixa.ingredientes && (
