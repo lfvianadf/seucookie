@@ -12,6 +12,8 @@ export type ProdutoSupabase = {
   qtd_estoque: number | null;
   disponivel: boolean;
   tipo_produto: "cookie" | "box";
+  qtd_cookies_box: number | null;
+  acrescimo_box: number | string | null;
 };
 
 function paraReceita(produto: ProdutoSupabase): Receita {
@@ -40,6 +42,9 @@ function paraReceita(produto: ProdutoSupabase): Receita {
           ? 0
           : produto.qtd_estoque ?? undefined,
     capitulo: produto.capitulo ?? undefined,
+    produtoId: produto.id,
+    acrescimoBox: produto.acrescimo_box != null ? Number(produto.acrescimo_box) : undefined,
+    qtdCookiesBox: produto.tipo_produto === "box" ? produto.qtd_cookies_box ?? null : undefined,
   };
 }
 
@@ -61,7 +66,7 @@ export async function buscarCardapio(): Promise<Cardapio> {
     const { data, error } = await supabase
       .from("produtos")
       .select(
-        "id, nome, numero_receita, descricao, preco, capitulo, foto_url, qtd_estoque, disponivel, tipo_produto",
+        "id, nome, numero_receita, descricao, preco, capitulo, foto_url, qtd_estoque, disponivel, tipo_produto, qtd_cookies_box, acrescimo_box",
       )
       .order("numero_receita", { ascending: true });
 

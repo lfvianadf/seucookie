@@ -25,6 +25,12 @@ export type Receita = {
   estoque?: number;
   /** Capítulo/categoria do cardápio no Supabase — ausente cai na seção padrão "os sabores" */
   capitulo?: string;
+  /** uuid do produto no Supabase — ausente quando o dado vem do fallback local */
+  produtoId?: string;
+  /** Quanto esse cookie soma ao preço base quando entra numa box (normalmente 0) */
+  acrescimoBox?: number;
+  /** Só na Receita da própria box: nº fixo de cookies exigido, ou null = composição livre */
+  qtdCookiesBox?: number | null;
 };
 
 export const CAPITULO_PADRAO = "os sabores";
@@ -40,7 +46,21 @@ export function agruparPorCapitulo(sabores: Receita[]) {
   return [...grupos.entries()].map(([titulo, receitas]) => ({ titulo, receitas }));
 }
 
-export const QUANTIDADE_CAIXA = 4;
+/** Usado só no fallback local (Supabase fora do ar) — mantém o comportamento fixo em 4. */
+export const QUANTIDADE_CAIXA_FALLBACK = 4;
+
+/** preco base + soma dos acréscimos de cada cookie escolhido × quantidade. */
+export function calcularPrecoBox(
+  precoBase: number,
+  composicao: ComposicaoCaixa[],
+  cookies: Receita[],
+) {
+  const acrescimos = composicao.reduce((soma, item) => {
+    const cookie = cookies.find((c) => c.produtoId === item.produtoId);
+    return soma + (cookie?.acrescimoBox ?? 0) * item.quantidade;
+  }, 0);
+  return precoBase + acrescimos;
+}
 
 /** Usados só se a busca no Supabase falhar ou vier vazia — ver src/lib/produtos.ts */
 export const SABORES_FALLBACK: Receita[] = [
@@ -74,6 +94,7 @@ export const CAIXA_FALLBACK: Receita = {
   ingredientes: "monte a sua caixa — escolha os 4 sabores",
   preco: 32.9,
   ehCaixa: true,
+  qtdCookiesBox: QUANTIDADE_CAIXA_FALLBACK,
 };
 
 export function formatarPreco(valor: number) {
@@ -87,6 +108,7 @@ export type ComposicaoCaixa = {
   numero: string;
   nome: string;
   quantidade: number;
+  produtoId: string;
 };
 
 export type ItemCarrinho = {
@@ -97,9 +119,14 @@ export type ItemCarrinho = {
   preco: number;
   quantidade: number;
   composicao?: ComposicaoCaixa[];
+  produtoId?: string;
 };
 
-export function montarMensagemPedido(itens: ItemCarrinho[], total: number) {
+export function montarMensagemPedido(
+  itens: ItemCarrinho[],
+  total: number,
+  pedidoId?: string,
+) {
   const linhas = itens.map((item) => {
     const composicao = item.composicao
       ?.map((c) => `${c.quantidade}x ${c.nome}`)
@@ -116,5 +143,6 @@ export function montarMensagemPedido(itens: ItemCarrinho[], total: number) {
     ...linhas,
     "",
     `Total: ${formatarPreco(total)}`,
+    ...(pedidoId ? [`Pedido #${pedidoId.slice(0, 8)}`] : []),
   ].join("\n");
 }

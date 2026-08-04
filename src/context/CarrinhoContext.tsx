@@ -18,7 +18,11 @@ type CarrinhoContextValor = {
   abrirCarrinho: () => void;
   fecharCarrinho: () => void;
   adicionarSabor: (receita: Receita) => void;
-  adicionarCaixa: (caixa: Receita, composicao: ComposicaoCaixa[]) => void;
+  adicionarCaixa: (
+    caixa: Receita,
+    composicao: ComposicaoCaixa[],
+    precoFinal: number,
+  ) => void;
   removerItem: (id: string) => void;
   alterarQuantidade: (id: string, delta: number) => void;
   limparCarrinho: () => void;
@@ -76,12 +80,17 @@ export function CarrinhoProvider({ children }: { children: ReactNode }) {
           peso: receita.peso,
           preco: receita.preco,
           quantidade: 1,
+          produtoId: receita.produtoId,
         },
       ];
     });
   }
 
-  function adicionarCaixa(caixa: Receita, composicao: ComposicaoCaixa[]) {
+  function adicionarCaixa(
+    caixa: Receita,
+    composicao: ComposicaoCaixa[],
+    precoFinal: number,
+  ) {
     const id = idDaCaixa(caixa.numero, composicao);
     setItens((atual) => {
       const existente = atual.find((item) => item.id === id);
@@ -97,9 +106,10 @@ export function CarrinhoProvider({ children }: { children: ReactNode }) {
           numero: caixa.numero,
           nome: caixa.nome,
           peso: caixa.peso,
-          preco: caixa.preco,
+          preco: precoFinal,
           quantidade: 1,
           composicao,
+          produtoId: caixa.produtoId,
         },
       ];
     });

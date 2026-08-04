@@ -2,7 +2,12 @@
 
 import { useState } from "react";
 import { useCarrinho } from "@/context/CarrinhoContext";
-import { QUANTIDADE_CAIXA, formatarPreco, type Receita } from "@/lib/site";
+import {
+  calcularPrecoBox,
+  formatarPreco,
+  type ComposicaoCaixa,
+  type Receita,
+} from "@/lib/site";
 
 type SeletorBoxProps = {
   caixa: Receita;
@@ -16,15 +21,28 @@ export function SeletorBox({ caixa, sabores }: SeletorBoxProps) {
   );
 
   const total = Object.values(contagens).reduce((a, b) => a + b, 0);
-  const restante = QUANTIDADE_CAIXA - total;
   const disponivel = !caixa.status;
+  // número fixo de cookies exigido pela box, ou null = composição livre
+  const alvo = caixa.qtdCookiesBox ?? null;
+  const restante = alvo != null ? alvo - total : null;
+  const pronta = alvo != null ? total === alvo : total > 0;
+
+  const composicaoAtual: ComposicaoCaixa[] = sabores
+    .filter((s) => contagens[s.numero] > 0)
+    .map((s) => ({
+      numero: s.numero,
+      nome: s.nome,
+      quantidade: contagens[s.numero],
+      produtoId: s.produtoId ?? "",
+    }));
+  const precoAtual = calcularPrecoBox(caixa.preco, composicaoAtual, sabores);
 
   function alterar(numero: string, delta: number) {
     setContagens((atual) => {
       const totalAtual = Object.values(atual).reduce((a, b) => a + b, 0);
       const novaQtd = atual[numero] + delta;
       if (novaQtd < 0) return atual;
-      if (delta > 0 && totalAtual >= QUANTIDADE_CAIXA) return atual;
+      if (delta > 0 && alvo != null && totalAtual >= alvo) return atual;
       const sabor = sabores.find((s) => s.numero === numero);
       if (delta > 0 && sabor?.estoque != null && novaQtd > sabor.estoque) return atual;
       return { ...atual, [numero]: novaQtd };
@@ -32,14 +50,7 @@ export function SeletorBox({ caixa, sabores }: SeletorBoxProps) {
   }
 
   function adicionar() {
-    const composicao = sabores
-      .filter((s) => contagens[s.numero] > 0)
-      .map((s) => ({
-        numero: s.numero,
-        nome: s.nome,
-        quantidade: contagens[s.numero],
-      }));
-    adicionarCaixa(caixa, composicao);
+    adicionarCaixa(caixa, composicaoAtual, precoAtual);
     setContagens(Object.fromEntries(sabores.map((s) => [s.numero, 0])));
   }
 
@@ -54,8 +65,19 @@ export function SeletorBox({ caixa, sabores }: SeletorBoxProps) {
   return (
     <div>
       <p className="font-corpo text-sm text-ameixa">
-        escolha os {QUANTIDADE_CAIXA} cookies
-        {restante > 0 ? ` — falta${restante === 1 ? "" : "m"} ${restante}` : " — pronta!"}
+        {alvo != null ? (
+          <>
+            escolha os {alvo} cookies
+            {restante! > 0
+              ? ` — falta${restante === 1 ? "" : "m"} ${restante}`
+              : " — pronta!"}
+          </>
+        ) : (
+          <>
+            escolha os cookies da caixa
+            {total > 0 ? ` — ${total} escolhido${total === 1 ? "" : "s"}` : ""}
+          </>
+        )}
       </p>
 
       <ul className="mt-5 divide-y divide-berinjela/15 border-y border-berinjela/15">
@@ -63,6 +85,7 @@ export function SeletorBox({ caixa, sabores }: SeletorBoxProps) {
           const esgotado = Boolean(sabor.status);
           const limiteAtingido =
             sabor.estoque != null && contagens[sabor.numero] >= sabor.estoque;
+          const noAlvo = alvo != null && total >= alvo;
           return (
             <li
               key={sabor.numero}
@@ -72,6 +95,11 @@ export function SeletorBox({ caixa, sabores }: SeletorBoxProps) {
             >
               <span className="flex items-center gap-2 font-titulo text-xl text-berinjela">
                 {sabor.nome}
+                {Boolean(sabor.acrescimoBox) && (
+                  <span className="font-corpo text-xs font-bold text-rosa">
+                    + {formatarPreco(sabor.acrescimoBox!)}
+                  </span>
+                )}
                 {sabor.status && (
                   <span className="font-corpo text-xs font-bold uppercase tracking-wide text-ameixa">
                     {sabor.status}
@@ -96,7 +124,7 @@ export function SeletorBox({ caixa, sabores }: SeletorBoxProps) {
                   onClick={() => alterar(sabor.numero, 1)}
                   aria-label={`Aumentar ${sabor.nome}`}
                   className="px-2 py-1.5 font-corpo text-lg font-bold text-berinjela disabled:opacity-30"
-                  disabled={total >= QUANTIDADE_CAIXA || esgotado || limiteAtingido}
+                  disabled={noAlvo || esgotado || limiteAtingido}
                 >
                   +
                 </button>
@@ -109,10 +137,10 @@ export function SeletorBox({ caixa, sabores }: SeletorBoxProps) {
       <button
         type="button"
         onClick={adicionar}
-        disabled={restante !== 0}
+        disabled={!pronta}
         className="mt-5 w-full rounded-sm bg-rosa px-7 py-3 font-corpo font-bold text-papel shadow-[3px_3px_0_rgba(67,48,59,0.25)] transition-transform enabled:hover:-translate-y-0.5 disabled:opacity-40"
       >
-        adicionar — {formatarPreco(caixa.preco)}
+        adicionar — {formatarPreco(precoAtual)}
       </button>
     </div>
   );
