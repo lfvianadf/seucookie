@@ -5,13 +5,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: SITE_URL,
-      lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 1,
     },
     {
       url: `${SITE_URL}/conheca`,
-      lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
     },

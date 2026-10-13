@@ -11,12 +11,12 @@ import { agruparPorCapitulo } from "@/lib/site";
 
 export const revalidate = 60;
 
-const TITULO = "o cardápio";
+const TITULO = "Cookies artesanais em Natal (RN)";
 const DESCRICAO =
-  "Três sabores e uma caixa pra montar do seu jeito. Cookies artesanais feitos em Natal, de R$ 11,90 a R$ 32,90.";
+  "Seu Cookie: cookies artesanais e recheados em Natal (RN). Confira o cardápio, monte sua caixa e peça pelo WhatsApp. Entrega e retirada a combinar.";
 
 export const metadata: Metadata = {
-  title: TITULO,
+  title: { absolute: `${TITULO} — seu cookie` },
   description: DESCRICAO,
   alternates: {
     canonical: "/",
@@ -46,8 +46,13 @@ export default async function CardapioPage() {
             o caderno inteiro, aberto
           </p>
           <h1 className="mt-2 font-titulo text-4xl text-berinjela sm:text-5xl">
-            o cardápio
+            cookies artesanais em Natal
           </h1>
+          <p className="mt-4 max-w-2xl font-corpo text-ameixa">
+            Esse é o cardápio do seu cookie: cookies recheados, feitos à mão em
+            Natal, RN. Escolha seus sabores, monte sua caixa e finalize o pedido
+            pelo WhatsApp.
+          </p>
 
           {capitulos.map((capitulo) => (
             <section key={capitulo.titulo} className="mt-16">
@@ -100,6 +105,35 @@ export default async function CardapioPage() {
                 </div>
               </div>
             </div>
+          </section>
+
+          <section className="mt-16 border-t border-berinjela/15 pt-10">
+            <h2 className="font-titulo text-2xl text-berinjela">
+              como pedir seu cookie em Natal
+            </h2>
+            <dl className="mt-6 space-y-6 font-corpo">
+              <div>
+                <dt className="font-bold">Como comprar?</dt>
+                <dd className="mt-1 text-ameixa">
+                  Adicione os cookies ou a caixa ao carrinho e envie o pedido
+                  pelo WhatsApp. O pagamento é combinado na conversa.
+                </dd>
+              </div>
+              <div>
+                <dt className="font-bold">Tem entrega e retirada em Natal?</dt>
+                <dd className="mt-1 text-ameixa">
+                  Sim. Combine pelo WhatsApp a retirada em Natal ou a entrega
+                  na região, confirmando seu endereço, taxa e horário.
+                </dd>
+              </div>
+              <div>
+                <dt className="font-bold">Posso encomendar para festas e presentes?</dt>
+                <dd className="mt-1 text-ameixa">
+                  Sim. Fale com a gente pelo WhatsApp para combinar quantidades,
+                  sabores e a data da sua encomenda.
+                </dd>
+              </div>
+            </dl>
           </section>
         </div>
       </main>

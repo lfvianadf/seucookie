@@ -27,7 +27,7 @@ const caveat = Caveat({
 
 const TITULO_PADRAO = "seu cookie — cookies caseiros feitos à mão em Natal";
 const DESCRICAO =
-  "Um caderno de receitas de família que virou loja. Cookies artesanais, feitos hoje de manhã, em Natal (RN). Peça pelo WhatsApp.";
+  "Seu Cookie: cookies artesanais e recheados, feitos à mão em Natal (RN). Confira o cardápio e peça pelo WhatsApp. Entrega e retirada a combinar.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -63,10 +63,15 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    "max-snippet": -1,
+    "max-image-preview": "large",
+    "max-video-preview": -1,
     googleBot: {
       index: true,
       follow: true,
       "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
     },
   },
 };
@@ -74,12 +79,19 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Bakery",
+  "@id": `${SITE_URL}/#seu-cookie`,
   name: "seu cookie",
+  alternateName: "Seu Cookie Natal",
   description: DESCRICAO,
   url: SITE_URL,
   image: `${SITE_URL}/cookie-hero.jpg`,
   telephone: `+${CONTATO.whatsapp}`,
-  priceRange: "R$ 11,90 - R$ 32,90",
+  hasMenu: `${SITE_URL}/`,
+  areaServed: {
+    "@type": "City",
+    name: "Natal",
+    containedInPlace: { "@type": "State", name: "Rio Grande do Norte" },
+  },
   address: {
     "@type": "PostalAddress",
     addressLocality: CONTATO.cidade,
@@ -103,6 +115,21 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "@id": `${SITE_URL}/#website`,
+              name: "seu cookie",
+              alternateName: "Seu Cookie Natal",
+              url: SITE_URL,
+              inLanguage: "pt-BR",
+              publisher: { "@id": `${SITE_URL}/#seu-cookie` },
+            }),
+          }}
         />
         <CarrinhoProvider>
           {children}

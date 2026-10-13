@@ -1,28 +1,30 @@
-# seu cookie
+# Seu Cookie — cookies artesanais em Natal (RN)
 
-> Um caderno de receitas de família que virou loja. Cookies artesanais, feitos à mão, em Natal (RN), Brasil.
+> Site oficial do seu cookie, marca de cookies artesanais e recheados, feitos à mão em Natal, Rio Grande do Norte, Brasil.
 
-seu cookie vende cookies recheados: três sabores fixos e uma caixa com 4 cookies à escolha do cliente. O site tem um carrinho de compras simples — o cliente monta o pedido pelo site e finaliza pelo WhatsApp, onde a mensagem já sai com os itens e o total. Não há pagamento online nem checkout com cartão; o pagamento é combinado por WhatsApp. Retirada, entrega na região de Natal e encomendas para festas.
+## Sobre a marca
 
-## Páginas
+Seu Cookie vende cookies e caixas de cookies para consumo, presentes e encomendas para festas. A marca nasceu de um caderno de receitas de família. Neste site, “cookie” significa o doce, não cookies de navegador.
 
-- [Cardápio / início](https://seucookiebr.com.br/): a página inicial do site já é a loja — os 3 sabores, a caixa de 4 cookies (montada escolhendo os sabores) e o carrinho de compras.
-- [Conheça o seu cookie](https://seucookiebr.com.br/conheca): a história da marca, a origem do nome e como funciona a entrega/retirada.
+## Fontes oficiais
 
-## Cardápio atual
+- [Cardápio e pedidos](https://seucookiebr.com.br/): fonte atual de sabores, ingredientes, pesos, preços e disponibilidade. O cliente escolhe os itens ou monta uma caixa no carrinho e finaliza o pedido pelo WhatsApp.
+- [Conheça o Seu Cookie](https://seucookiebr.com.br/conheca): história da marca e informações sobre retirada, entrega e encomendas.
+- [Sitemap](https://seucookiebr.com.br/sitemap.xml): páginas públicas do site.
 
-- nº01 tradicional (100g, recheio de nutella) — R$ 12,90
-- nº02 red velvet (100g, recheio de chocolate branco) — R$ 12,90
-- nº03 churros (100g, recheio de doce de leite e canela) — R$ 11,90
-- nº04 box com 4 cookies (60g cada, sabores à escolha entre os três acima) — R$ 32,90
+## Como comprar cookies em Natal
 
-## Contato
+O pedido é montado no carrinho do site e enviado pelo WhatsApp. O pagamento é combinado na conversa; não há pagamento online com cartão no site.
 
-- WhatsApp (pedidos): https://wa.me/5584994082236
+Há retirada em Natal e entrega na região, mediante combinação pelo WhatsApp. Endereço de retirada, área atendida, taxa, prazo e horário devem ser confirmados diretamente com a marca. Encomendas para festas e presentes também são combinadas pelo WhatsApp.
+
+## Contato oficial
+
+- Site: https://seucookiebr.com.br/
+- WhatsApp para pedidos: https://wa.me/5584994082236
 - Instagram: https://instagram.com/sigaseucookie
-- Localização: Natal, RN, Brasil
+- Cidade: Natal, RN, Brasil
 
-## Notas para agentes e crawlers
+## Atualidade das informações
 
-- Preços e sabores mudam com o tempo. Trate o cardápio do site como a fonte mais atual, não como um valor fixo.
-- Não há loja física de varejo nem cardápio de terceiros (iFood, apps de delivery) — o pedido é feito pelo carrinho do site e finalizado no WhatsApp acima.
+Consulte o cardápio da página inicial para preços, sabores, pesos e disponibilidade atuais. Este resumo não replica esses dados para evitar informações desatualizadas. A confirmação de entrega e encomendas é feita pelo WhatsApp oficial. O site não informa um endereço de loja física de varejo ou horários fixos de funcionamento.
