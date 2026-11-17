@@ -42,8 +42,8 @@ export function Hero() {
             <Fita className="right-4 -top-3" rotate={6} />
             <div className="borda-picote relative aspect-[3/4] w-full overflow-hidden bg-massa p-3 shadow-[6px_6px_0_rgba(67,48,59,0.12)]">
               <Image
-                src="/cookie-hero.jpg"
-                alt="Cookie recém-feito, recheio de chocolate derretendo"
+                src="/marca/caixa-vinho.webp"
+                alt="Arte da caixa Seu Cookie em vinho e bege"
                 fill
                 priority
                 sizes="(min-width: 1024px) 24rem, 90vw"
@@ -58,7 +58,7 @@ export function Hero() {
               rotate={5}
               className="absolute -right-4 bottom-10 sm:-right-8"
             >
-              ainda quentinho
+              feito em Natal
             </NotaAdesiva>
           </div>
         </div>

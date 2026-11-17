@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Nunito_Sans, Caveat } from "next/font/google";
 import { CONTATO, SITE_URL } from "@/lib/site";
-import { BotaoFlutuante } from "@/components/BotaoFlutuante";
 import { CarrinhoPainel } from "@/components/CarrinhoPainel";
 import { CarrinhoProvider } from "@/context/CarrinhoContext";
 import "./globals.css";
@@ -84,7 +83,7 @@ const jsonLd = {
   alternateName: "Seu Cookie Natal",
   description: DESCRICAO,
   url: SITE_URL,
-  image: `${SITE_URL}/cookie-hero.jpg`,
+  image: `${SITE_URL}/marca/caixa-vinho.webp`,
   telephone: `+${CONTATO.whatsapp}`,
   hasMenu: `${SITE_URL}/`,
   areaServed: {
@@ -133,7 +132,6 @@ export default function RootLayout({
         />
         <CarrinhoProvider>
           {children}
-          <BotaoFlutuante />
           <CarrinhoPainel />
         </CarrinhoProvider>
       </body>

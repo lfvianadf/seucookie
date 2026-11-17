@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { CarimboReceita } from "@/components/CarimboReceita";
-import { FotoReceita } from "@/components/FotoReceita";
+import Image from "next/image";
 import { CardapioSabores } from "@/components/CardapioSabores";
 import { SeletorBox } from "@/components/SeletorBox";
-import { SeloStatus } from "@/components/SeloStatus";
 import { buscarCardapio } from "@/lib/produtos";
-import { agruparPorCapitulo } from "@/lib/site";
+import { agruparPorCapitulo, linkWhatsapp } from "@/lib/site";
 
 export const revalidate = 60;
 
@@ -34,80 +32,59 @@ export const metadata: Metadata = {
 
 export default async function CardapioPage() {
   const { sabores, caixa, saboresDaCaixa } = await buscarCardapio();
-  const boxDisponivel = !caixa.status;
   const capitulos = agruparPorCapitulo(sabores);
 
   return (
     <>
       <Header />
-      <main className="px-6 py-16 sm:px-10 sm:py-20">
-        <div className="mx-auto max-w-6xl">
-          <p className="font-manuscrita text-2xl text-ameixa rotate-[-2deg]">
-            o caderno inteiro, aberto
-          </p>
-          <h1 className="mt-2 font-titulo text-4xl text-berinjela sm:text-5xl">
-            cookies artesanais em Natal
-          </h1>
-          <p className="mt-4 max-w-2xl font-corpo text-ameixa">
-            Esse é o cardápio do seu cookie: cookies recheados, feitos à mão em
-            Natal, RN. Escolha seus sabores, monte sua caixa e finalize o pedido
-            pelo WhatsApp.
-          </p>
+      <main className="loja">
+        <section className="abertura">
+          <div className="miolo abertura-grade">
+            <div className="abertura-texto">
+              <p className="rubrica">Feito à mão em Natal, RN</p>
+              <h1>O seu cookie,<br /><em>do seu jeito.</em></h1>
+              <p>Escolha seus cookies recheados ou monte uma caixa com os sabores que você adora.</p>
+              <a className="botao-vinho" href="#cardapio">Ver cardápio <span aria-hidden="true">↓</span></a>
+            </div>
+            <div className="abertura-arte">
+              <Image src="/marca/caixa-vinho.webp" alt="Arte da caixa Seu Cookie em vinho e bege sobre fundo rosa" width={1250} height={938} priority sizes="(min-width: 1200px) 650px, (min-width: 701px) 52vw, 100vw" />
+            </div>
+          </div>
+        </section>
 
+        <div className="miolo secao" id="cardapio">
+          <div className="titulo-secao"><h2>O cardápio</h2><span aria-hidden="true" /></div>
           {capitulos.map((capitulo) => (
-            <section key={capitulo.titulo} className="mt-16">
-              <h2 className="font-titulo text-2xl text-berinjela">
-                {capitulo.titulo}
-              </h2>
+            <section className="capitulo" key={capitulo.titulo} aria-label={capitulo.titulo}>
+              <h3 className="rubrica">{capitulo.titulo}</h3>
               <CardapioSabores sabores={capitulo.receitas} />
             </section>
           ))}
+        </div>
 
-          <section className="mt-16 border-t border-berinjela/15 pt-16">
-            <h2 className="font-titulo text-2xl text-berinjela">combos</h2>
+        <section id="combos" className="secao combos">
+          <div className="miolo">
+            <p className="rubrica">Combos{caixa.numero !== "—" && ` · nº ${caixa.numero}`}</p>
+            <h2 className="titulo-grande">Monte sua caixa</h2>
+            <h3 className="mt-3 font-bold">{caixa.nome}</h3>
+            <p className="mb-7">{caixa.ingredientes}{caixa.peso && ` · ${caixa.peso}`}</p>
+            <SeletorBox caixa={caixa} sabores={saboresDaCaixa} />
+          </div>
+        </section>
 
-            <div
-              className={`mt-6 grid grid-cols-1 gap-8 sm:grid-cols-12 ${
-                boxDisponivel ? "" : "opacity-60"
-              }`}
-            >
-              <div className="relative sm:col-span-5">
-                <FotoReceita
-                  src={caixa.foto}
-                  className={`aspect-[4/3] w-full -rotate-1 ${
-                    boxDisponivel ? "" : "grayscale"
-                  }`}
-                  sizes="(min-width: 1024px) 24rem, 90vw"
-                />
-                <div className="absolute -bottom-6 -right-4">
-                  <CarimboReceita numero={caixa.numero} className="bg-papel" />
-                </div>
-              </div>
-
-              <div className="sm:col-span-7">
-                <div className="flex flex-wrap items-center gap-3">
-                  <h3 className="font-titulo text-2xl text-berinjela">
-                    {caixa.nome}
-                  </h3>
-                  {!boxDisponivel && (
-                    <SeloStatus variante="esgotado">esse acabou :(</SeloStatus>
-                  )}
-                </div>
-                {caixa.ingredientes && (
-                  <p className="mt-1 font-corpo text-sm text-ameixa">
-                    {caixa.ingredientes}
-                    {caixa.peso ? ` · ${caixa.peso}` : ""}
-                  </p>
-                )}
-
-                <div className="mt-6">
-                  <SeletorBox caixa={caixa} sabores={saboresDaCaixa} />
-                </div>
-              </div>
+        <section className="presente">
+          <div className="miolo presente-grade">
+            <Image src="/marca/caixa-rosa.webp" alt="Arte oficial da caixa rosa, com alça e espaço para uma dedicatória" width={1250} height={938} sizes="(min-width: 701px) 45vw, 95vw" />
+            <div>
+              <p className="rubrica">Para presentear</p>
+              <h2 className="titulo-grande">Cabe um carinho aqui.</h2>
+              <p>Uma caixa estampada, um recado na frente e os sabores escolhidos por você. Para presentes e encomendas, combine os detalhes com a gente.</p>
+              <a className="link-claro" href={linkWhatsapp("Oi! Quero combinar uma encomenda para presente.")}>Conversar sobre encomendas ↗</a>
             </div>
-          </section>
-
-          <section className="mt-16 border-t border-berinjela/15 pt-10">
+          </div>
+        </section>
+        <div className="miolo">
+          <section className="secao perguntas">
             <h2 className="font-titulo text-2xl text-berinjela">
               como pedir seu cookie em Natal
             </h2>

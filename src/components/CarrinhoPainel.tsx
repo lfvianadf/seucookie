@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+import { Cookinho } from "./Cookinho";
 import { useCarrinho } from "@/context/CarrinhoContext";
 import { formatarPreco, linkWhatsapp, montarMensagemPedido } from "@/lib/site";
 
@@ -14,6 +16,21 @@ export function CarrinhoPainel() {
     total,
   } = useCarrinho();
 
+  const painel = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    if (!aberto || !painel.current) return;
+    const dialog = painel.current;
+    const origem = document.activeElement;
+    const overflow = document.body.style.overflow;
+    dialog.showModal();
+    document.body.style.overflow = "hidden";
+    return () => {
+      dialog.close();
+      document.body.style.overflow = overflow;
+      if (origem instanceof HTMLElement) origem.focus({ preventScroll: true });
+    };
+  }, [aberto]);
+
   if (!aberto) return null;
 
   function finalizar() {
@@ -24,17 +41,14 @@ export function CarrinhoPainel() {
   }
 
   return (
-    <div className="fixed inset-0 z-[60]">
-      <button
-        type="button"
-        aria-label="Fechar carrinho"
-        onClick={fecharCarrinho}
-        className="absolute inset-0 bg-berinjela/40"
-      />
-
-      <div className="absolute right-0 top-0 flex h-full w-full max-w-sm flex-col bg-papel shadow-[-6px_0_0_rgba(67,48,59,0.1)] sm:max-w-md">
+    <dialog ref={painel} aria-label="Seu pedido" className="painel-pedido"
+      onCancel={fecharCarrinho} onClick={(event) => {
+        if (event.target === event.currentTarget) fecharCarrinho();
+      }}>
+      <div className="flex h-full flex-col bg-papel">
         <div className="flex items-center justify-between border-b border-berinjela/15 px-6 py-5">
-          <h2 className="font-titulo text-2xl text-berinjela">seu pedido</h2>
+          <h2 className="font-titulo text-3xl text-vinho">Seu pedido</h2>
+          {itens.some((item) => item.composicao?.length) && <Cookinho pose="confere" />}
           <button
             type="button"
             onClick={fecharCarrinho}
@@ -105,7 +119,7 @@ export function CarrinhoPainel() {
                         +
                       </button>
                     </div>
-                    <span className="font-corpo text-sm font-bold text-rosa">
+                    <span className="font-corpo text-sm font-bold text-vinho">
                       {formatarPreco(item.preco * item.quantidade)}
                     </span>
                   </div>
@@ -126,13 +140,13 @@ export function CarrinhoPainel() {
             <button
               type="button"
               onClick={finalizar}
-              className="mt-4 block w-full rounded-sm bg-rosa px-7 py-3 text-center font-corpo font-bold text-papel shadow-[3px_3px_0_rgba(67,48,59,0.25)] transition-transform hover:-translate-y-0.5"
+              className="botao-vinho mt-4 w-full justify-center"
             >
               finalizar pelo whatsapp
             </button>
           </div>
         )}
       </div>
-    </div>
+    </dialog>
   );
 }

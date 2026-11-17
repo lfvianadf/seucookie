@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CarimboReceita } from "./CarimboReceita";
+import { adesivoDoSabor } from "@/lib/adesivos";
 import { FotoReceita } from "./FotoReceita";
 import { SeloStatus } from "./SeloStatus";
 import { TracoManuscrito } from "./TracoManuscrito";
@@ -36,14 +37,16 @@ export function ReceitasDestaque({ receitas }: ReceitasDestaqueProps) {
             const esgotado = Boolean(receita.status);
             return (
               <li
-                key={receita.numero}
+                key={receita.produtoId ?? receita.nome}
                 className={`flex items-center gap-5 py-5 ${
                   i % 2 === 0 ? "sm:pl-0" : "pl-6 sm:pl-10"
                 } ${esgotado ? "opacity-60" : ""}`}
               >
                 <div className="relative shrink-0">
                   <FotoReceita
-                    src={receita.foto}
+                    arte
+                    nome={receita.ehCaixa ? "Arte da caixa" : `Identidade de ${receita.nome}`}
+                    src={receita.ehCaixa ? "/marca/caixa-vinho.webp" : adesivoDoSabor(receita.nome) ?? "/marca/logo.webp"}
                     className={`-rotate-2 ${esgotado ? "grayscale" : ""}`}
                   />
                   <div className="absolute bottom-0 -right-3 hidden sm:block sm:-bottom-5 sm:-right-5">
