@@ -72,6 +72,12 @@ body {
 .sacola, .botao-principal { display: inline-flex; gap: 10px; align-items: center; min-height: 44px; background: var(--berinjela); color: var(--papel); font-weight: 700; }
 .sacola { border-radius: 30px; padding: 0 13px; }
 .cabecalho :focus-visible, .abertura :focus-visible, footer :focus-visible { outline-color: var(--massa); }
+@media (max-width: 420px) {
+  .cabecalho .miolo { width: calc(100% - 24px); gap: 6px; }
+  .logo-cabecalho { width: 42px; height: 44px; }
+  .cabecalho nav { gap: 6px; font-size: .75rem; }
+  .cabecalho .sacola { gap: 6px; padding-inline: 9px; }
+}
 .contador { font-variant-numeric: tabular-nums; }
 .botao-principal { padding: 12px 22px; border-radius: 4px; }
 button { cursor: pointer; }

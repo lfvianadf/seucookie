@@ -12,6 +12,7 @@ export function Header() {
         <nav aria-label="Principal" className="flex items-center gap-3 font-bold sm:gap-8">
           <Link href="/#cardapio">Cardápio</Link>
           <Link href="/#combos">Combos</Link>
+          <Link href="/#encomendas">Encomendas</Link>
           <BotaoCarrinho />
         </nav>
       </div>
