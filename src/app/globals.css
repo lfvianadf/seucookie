@@ -63,7 +63,7 @@ body {
 .miolo { width: min(100% - 40px, 1200px); margin-inline: auto; }
 .secao { padding-block: clamp(42px, 6vw, 84px); }
 #cardapio, #combos, #encomendas { scroll-margin-top: 78px; }
-.cabecalho { position: sticky; z-index: 50; top: 0; background: var(--berinjela); border-bottom: 1px solid #f3e5d32b; color: var(--massa); }
+.cabecalho { position: sticky; z-index: 50; top: 0; background: var(--berinjela); color: var(--massa); }
 .cabecalho .miolo { min-height: 64px; }
 .logo-cabecalho { width: 54px; height: 52px; object-fit: contain; }
 .cabecalho nav { font-size: .875rem; }
@@ -73,7 +73,7 @@ body {
 .sacola { border-radius: 30px; padding: 0 13px; }
 .cabecalho :focus-visible, .abertura :focus-visible, footer :focus-visible { outline-color: var(--massa); }
 @media (max-width: 420px) {
-  .cabecalho .miolo { width: calc(100% - 24px); gap: 6px; }
+  .cabecalho .miolo { gap: 6px; }
   .logo-cabecalho { width: 42px; height: 44px; }
   .cabecalho nav { gap: 6px; font-size: .75rem; }
   .cabecalho .sacola { gap: 6px; padding-inline: 9px; }
@@ -88,13 +88,14 @@ button:disabled { cursor: default; }
 .estampa-abertura {
   pointer-events: none;
   position: absolute;
-  inset: auto 0 0;
-  height: 140px;
-  background: url('/marca/padrao-berinjela.webp') center / 330px auto repeat;
-  mask-image: linear-gradient(180deg, transparent, black 52%, transparent);
-  opacity: .8;
+  inset: 0 0 0 28%;
+  background: url('/marca/padrao-berinjela.webp') right bottom / 255px auto repeat;
+  mask-image: radial-gradient(ellipse 90% 55% at 95% 79%, black, #0009 35%, transparent 78%),
+    linear-gradient(180deg, black 83%, transparent);
+  mask-composite: intersect;
+  opacity: .52;
 }
-.abertura-texto { padding-block: 34px 125px; }
+.abertura-texto { padding-block: 32px 55px; }
 .abertura .rubrica { color: var(--massa); }
 .rubrica { font-size: .75rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--berinjela); }
 .abertura h1, .titulo-grande, .titulo-secao h2, .receita h3 { font-family: var(--font-epoche), serif; font-weight: 400; }
@@ -196,10 +197,10 @@ button:disabled { cursor: default; }
   .logo-cabecalho { width: 70px; height: 65px; }
   .estampa-abertura {
     inset: 0 0 0 39%;
-    height: auto;
+    background-position: center;
     background-size: clamp(390px, 36vw, 620px) auto;
     mask-image: linear-gradient(90deg, transparent, black 52%), linear-gradient(180deg, transparent, black 16%, black 76%, transparent);
-    mask-composite: intersect;
+    opacity: .8;
   }
   .abertura-texto { width: 58%; padding-block: clamp(44px, 5vw, 72px); }
   .abertura h1 { font-size: clamp(3.1rem, 5.4vw, 5.6rem); }
