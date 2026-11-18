@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import Image from "next/image";
-import { CookieGirando } from "@/components/CookieGirando";
 import { CardapioSabores } from "@/components/CardapioSabores";
 import { SeletorBox } from "@/components/SeletorBox";
 import { buscarCardapio } from "@/lib/produtos";
@@ -40,14 +39,13 @@ export default async function CardapioPage() {
       <Header />
       <main className="loja">
         <section className="abertura">
-          <div className="miolo abertura-grade">
+          <div className="miolo">
             <div className="abertura-texto">
               <p className="rubrica">Feito à mão em Natal, RN</p>
-              <h1>O seu cookie,<br /><em>do seu jeito.</em></h1>
-              <p>Escolha seus cookies recheados ou monte uma caixa com os sabores que você adora.</p>
+              <h1>Qual é o seu<br />cookie de hoje?</h1>
+              <p>Conheça as receitas da casa, escolha seu recheio favorito e peça pelo WhatsApp.</p>
               <a className="botao-vinho" href="#cardapio">Ver cardápio <span aria-hidden="true">↓</span></a>
             </div>
-            <CookieGirando />
           </div>
         </section>
 

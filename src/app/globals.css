@@ -81,17 +81,16 @@ body {
 button { cursor: pointer; }
 button:disabled { cursor: default; }
 .botao-vinho:disabled { opacity: .56; }
-.abertura { background: var(--massa); border-bottom: 1px solid var(--linha); }
-.abertura-grade { display: grid; }
-.abertura-texto { padding-block: 30px 25px; }
+.abertura { position: relative; background: var(--berinjela); color: var(--massa); }
+.abertura::after { content: ""; display: block; height: 52px; background: url('/marca/padrao-berinjela.webp') center top / 320px auto repeat; }
+.abertura-texto { padding-block: 34px 28px; }
+.abertura .rubrica { color: var(--massa); }
 .rubrica { font-size: .75rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--vinho); }
 .abertura h1, .titulo-grande, .titulo-secao h2, .receita h3 { font-family: var(--font-epoche), serif; font-weight: 400; }
-.abertura h1 { color: var(--vinho); font-size: clamp(3.1rem, 10.8vw, 6.4rem); line-height: .98; letter-spacing: -.045em; margin: 14px 0; }
-.abertura h1 em { font-style: normal; color: var(--berinjela); }
+.abertura h1 { color: var(--massa); font-size: clamp(2rem, 10.5vw, 4.15rem); line-height: .98; letter-spacing: -.045em; margin: 14px 0; }
 .abertura-texto > p:not(.rubrica) { max-width: 35ch; font-size: 1rem; }
-.abertura-texto .botao-vinho { margin-top: 20px; gap: 24px; }
-.abertura-arte { position: relative; margin: 0 -20px; overflow: hidden; }
-.abertura-arte video { width: 100%; max-height: 305px; aspect-ratio: 1.7; object-fit: cover; object-position: center 55%; }
+.abertura-texto .botao-vinho { margin-top: 20px; gap: 24px; color: var(--berinjela); background: var(--massa); }
+.abertura a:focus-visible { outline-color: var(--massa); }
 .titulo-grande, .titulo-secao h2 { font-size: clamp(2.4rem, 5vw, 4.2rem); line-height: 1.04; color: var(--vinho); letter-spacing: -.035em; }
 .titulo-secao { display: flex; align-items: center; gap: 24px; }
 .titulo-secao span { flex: 1; border-top: 1px solid var(--linha); }
@@ -114,7 +113,6 @@ button:disabled { cursor: default; }
 .combos { background: var(--massa); border-block: 1px solid var(--linha); }
 .combos h2 { margin-top: 9px; }
 .montagem { display: grid; align-items: start; gap: 18px; }
-.controle-giro { position: absolute; right: 12px; bottom: 12px; display: grid; place-items: center; min-width: 44px; min-height: 44px; border: 1px solid var(--linha); border-radius: 50%; background: var(--papel); color: var(--vinho); font-size: 1rem; }
 .previa-caixa { position: sticky; top: 64px; z-index: 3; display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: center; background: var(--papel); border-bottom: 1px solid var(--linha); }
 .caixa-dobras { width: 100%; aspect-ratio: 10/7; background: url('/marca/caixa-dobras-mobile.webp') center top / 100% 1900% no-repeat; transition: background-position-y 550ms steps(18); }
 .caixa-dobras[data-aberta="true"] { background-position-y: 100%; }
@@ -136,11 +134,9 @@ button:disabled { cursor: default; }
   .miolo { width: min(100% - 80px, 1200px); }
   .cabecalho .miolo { min-height: 76px; }
   .logo-cabecalho { width: 70px; height: 65px; }
-  .abertura-grade { grid-template-columns: 1fr 1.12fr; align-items: stretch; }
-  .abertura-texto { align-self: center; padding: clamp(44px,6vw,88px) 18px clamp(44px,6vw,88px) 0; }
-  .abertura h1 { font-size: clamp(3.2rem,6.1vw,6.4rem); }
-  .abertura-arte { margin: 0; }
-  .abertura-arte video { height: 100%; max-height: none; aspect-ratio: 4/3; }
+  .abertura::after { position: absolute; inset: 0 0 0 60%; height: auto; background-size: clamp(350px, 38vw, 660px) auto; }
+  .abertura-texto { width: 58%; padding-block: clamp(44px, 5vw, 72px); }
+  .abertura h1 { font-size: clamp(3.1rem, 5.4vw, 5.6rem); }
   .grade-sabores { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 32px; }
   .receita { display: flex; flex-direction: column; align-items: stretch; padding: 0 0 14px; gap: 16px; }
   .receita-arte { position: relative; background: var(--massa); padding: 20px; }
@@ -158,13 +154,11 @@ button:disabled { cursor: default; }
 @keyframes surgir { from { opacity: .45; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @keyframes entrar-pedido { from { transform: translateX(100%); } to { transform: none; } }
 @media (prefers-reduced-motion: no-preference) {
-  .abertura h1, .abertura-arte, .abertura .botao-vinho { animation: surgir 220ms ease-out backwards; }
-  .abertura-arte { animation-delay: 45ms; }
+  .abertura h1, .abertura .botao-vinho { animation: surgir 220ms ease-out backwards; }
   .abertura .botao-vinho { animation-delay: 70ms; }
   .contador, .contador-sabor { animation: surgir 180ms ease-out; }
   .painel-pedido[open] { animation: entrar-pedido 200ms ease-out; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .controle-giro { display: none; }
   *, *::before, *::after { animation-duration: 0s !important; transition-duration: 0s !important; scroll-behavior: auto !important; }
 }
