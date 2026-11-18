@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import Image from "next/image";
-import { EstampaAnimada } from "@/components/EstampaAnimada";
 import { CardapioSabores } from "@/components/CardapioSabores";
 import { SeletorBox } from "@/components/SeletorBox";
 import { buscarCardapio } from "@/lib/produtos";
@@ -40,7 +39,7 @@ export default async function CardapioPage() {
       <Header />
       <main className="loja">
         <section className="abertura">
-          <EstampaAnimada />
+          <div className="estampa-abertura" aria-hidden="true" />
           <div className="miolo">
             <div className="abertura-texto">
               <p className="rubrica">Feito à mão em Natal, RN</p>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ContadorQuantidade } from "./ContadorQuantidade";
 import { useCarrinho } from "@/context/CarrinhoContext";
 import {
   calcularPrecoBox,
@@ -120,9 +121,7 @@ export function SeletorBox({ caixa, sabores }: SeletorBoxProps) {
                   >
                     −
                   </button>
-                  <span className="min-w-4 text-center font-corpo text-sm font-bold text-berinjela">
-                    {contagens[sabor.numero]}
-                  </span>
+                  <ContadorQuantidade valor={contagens[sabor.numero]} className="min-w-4 text-center font-corpo text-sm font-bold text-berinjela" />
                   <button
                     type="button"
                     onClick={() => alterar(sabor.numero, 1)}

@@ -1,5 +1,6 @@
 "use client";
 
+import { ContadorQuantidade } from "./ContadorQuantidade";
 import { useCarrinho } from "@/context/CarrinhoContext";
 import { IconeCesta } from "./IconeCesta";
 
@@ -14,7 +15,7 @@ export function BotaoCarrinho() {
       aria-label={`Abrir carrinho, ${quantidadeTotal} itens`} className="sacola">
       <IconeCesta className="size-5" />
       <span className="hidden sm:inline">Seu pedido</span>
-      <span key={quantidadeTotal} className="contador">{quantidadeTotal}</span>
+      <ContadorQuantidade valor={quantidadeTotal} />
     </button>
   );
 }

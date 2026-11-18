@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { ContadorQuantidade } from "./ContadorQuantidade";
 import { useCarrinho } from "@/context/CarrinhoContext";
 import { formatarPreco, linkWhatsapp, montarMensagemPedido } from "@/lib/site";
 
@@ -105,9 +106,7 @@ export function CarrinhoPainel() {
                       >
                         −
                       </button>
-                      <span className="min-w-4 text-center font-corpo text-sm font-bold text-berinjela">
-                        {item.quantidade}
-                      </span>
+                      <ContadorQuantidade valor={item.quantidade} className="min-w-4 text-center font-corpo text-sm font-bold text-berinjela" />
                       <button
                         type="button"
                         onClick={() => alterarQuantidade(item.id, 1)}

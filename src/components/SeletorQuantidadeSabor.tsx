@@ -1,5 +1,6 @@
 "use client";
 
+import { ContadorQuantidade } from "./ContadorQuantidade";
 import { useCarrinho } from "@/context/CarrinhoContext";
 import type { Receita } from "@/lib/site";
 
@@ -10,11 +11,9 @@ export function SeletorQuantidadeSabor({ sabor }: { sabor: Receita }) {
   return (
     <div className="passador">
       {quantidade > 0 && (
-        <>
-          <button type="button" onClick={() => alterarQuantidade(sabor.numero, -1)} aria-label={`Diminuir ${sabor.nome}`}>−</button>
-          <span key={quantidade} className="contador-sabor">{quantidade}</span>
-        </>
+        <button type="button" onClick={() => alterarQuantidade(sabor.numero, -1)} aria-label={`Diminuir ${sabor.nome}`}>−</button>
       )}
+      <ContadorQuantidade valor={quantidade} oculto={quantidade === 0} />
       <button type="button" onClick={() => adicionarSabor(sabor)} disabled={Boolean(sabor.status) || limite}
         aria-label={`${quantidade ? "Aumentar" : "Adicionar"} ${sabor.nome}`}>+</button>
     </div>

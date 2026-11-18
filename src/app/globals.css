@@ -73,8 +73,7 @@ body {
 .sacola { border-radius: 30px; padding: 0 13px; }
 .cabecalho :focus-visible, .abertura :focus-visible { outline-color: var(--massa); }
 .contador { font-variant-numeric: tabular-nums; }
-.botao-principal { padding: 12px 22px; border-radius: 4px; transition: transform 180ms ease-out; }
-.botao-principal:enabled:hover, a.botao-principal:hover { transform: translateY(-2px); }
+.botao-principal { padding: 12px 22px; border-radius: 4px; }
 button { cursor: pointer; }
 button:disabled { cursor: default; }
 .botao-principal:disabled { opacity: .56; }
@@ -89,8 +88,6 @@ button:disabled { cursor: default; }
   mask-image: linear-gradient(180deg, transparent, black 52%, transparent);
   opacity: .8;
 }
-.estampa-abertura canvas { width: 100%; height: 100%; }
-.controle-estampa { position: absolute; z-index: 1; right: 20px; bottom: 10px; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #f3e5d36b; border-radius: 50%; background: var(--berinjela); color: var(--massa); }
 .abertura-texto { padding-block: 34px 125px; }
 .abertura .rubrica { color: var(--massa); }
 .rubrica { font-size: .75rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--berinjela); }
@@ -107,8 +104,7 @@ button:disabled { cursor: default; }
 .grade-sabores { display: grid; }
 .receita { display: grid; grid-template-columns: clamp(70px, 21vw, 100px) 1fr; align-items: start; gap: 16px; padding: 20px 0; border-top: 1px solid var(--linha); }
 .receita-arte { display: grid; justify-items: center; align-content: center; gap: 6px; }
-.adesivo-ampliavel { display: block; width: 100%; background: transparent; transition: transform 180ms; }
-.adesivo-ampliavel:hover { transform: rotate(-3deg); }
+.adesivo-ampliavel { display: block; width: 100%; background: transparent; }
 .receita-numero { font-family: var(--font-caveat), cursive; font-size: 1.2rem; color: var(--ameixa); }
 .monograma { display: grid; place-items: center; aspect-ratio: 1; width: 100%; background: var(--massa); color: var(--berinjela); font: 3rem var(--font-epoche), serif; border-radius: 50%; }
 .receita-texto { display: flex; flex-direction: column; min-width: 0; height: 100%; }
@@ -149,7 +145,6 @@ button:disabled { cursor: default; }
     mask-image: linear-gradient(90deg, transparent, black 52%), linear-gradient(180deg, transparent, black 16%, black 76%, transparent);
     mask-composite: intersect;
   }
-  .controle-estampa { right: max(20px, calc((100% - 1200px) / 2)); bottom: 20px; }
   .abertura-texto { width: 58%; padding-block: clamp(44px, 5vw, 72px); }
   .abertura h1 { font-size: clamp(3.1rem, 5.4vw, 5.6rem); }
   .grade-sabores { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 32px; }
@@ -166,15 +161,14 @@ button:disabled { cursor: default; }
   .perguntas dl { grid-template-columns: repeat(3,1fr); }
 }
 @media (max-height: 580px) { .previa-caixa { position: static; } }
-@keyframes surgir { from { opacity: .45; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @keyframes entrar-pedido { from { transform: translateX(100%); } to { transform: none; } }
+@keyframes revelar-fundo { from { opacity: 0; } to { opacity: 1; } }
 @media (prefers-reduced-motion: no-preference) {
-  .abertura h1, .abertura .botao-principal { animation: surgir 220ms ease-out backwards; }
-  .abertura .botao-principal { animation-delay: 70ms; }
-  .contador, .contador-sabor { animation: surgir 180ms ease-out; }
+  .passador button, button.botao-principal { transition: transform 120ms ease-out; }
+  .passador button:enabled:active, button.botao-principal:enabled:active { transform: scale(.95); }
   .painel-pedido[open] { animation: entrar-pedido 200ms ease-out; }
+  .painel-pedido[open]::backdrop { animation: revelar-fundo 200ms ease-out; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .controle-estampa, .estampa-abertura canvas { display: none; }
   *, *::before, *::after { animation-duration: 0s !important; transition-duration: 0s !important; scroll-behavior: auto !important; }
 }

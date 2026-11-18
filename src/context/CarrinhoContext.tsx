@@ -15,6 +15,7 @@ const CHAVE_STORAGE = "seucookie:carrinho";
 type CarrinhoContextValor = {
   itens: ItemCarrinho[];
   aberto: boolean;
+  carregado: boolean;
   abrirCarrinho: () => void;
   fecharCarrinho: () => void;
   adicionarSabor: (receita: Receita) => void;
@@ -150,6 +151,7 @@ export function CarrinhoProvider({ children }: { children: ReactNode }) {
       value={{
         itens,
         aberto,
+        carregado,
         abrirCarrinho: () => setAberto(true),
         fecharCarrinho: () => setAberto(false),
         adicionarSabor,
