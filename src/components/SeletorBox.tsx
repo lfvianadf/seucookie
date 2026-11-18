@@ -1,9 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import { Cookinho } from "./Cookinho";
-import { adesivoDoSabor } from "@/lib/adesivos";
 import { useCarrinho } from "@/context/CarrinhoContext";
 import {
   calcularPrecoBox,
@@ -70,36 +67,21 @@ export function SeletorBox({ caixa, sabores }: SeletorBoxProps) {
   const progresso = alvo == null
     ? `${total} ${total === 1 ? "escolhido" : "escolhidos"}`
     : `${total} de ${alvo}${pronta ? " · caixa pronta" : ""}`;
-  const celebrar = alvo == null ? adicionada : pronta;
-  const pose = celebrar ? "pulo" : total > 0 ? "aceno" : "idle";
 
   return (
     <div className="montagem">
-      <div className="previa-caixa">
-        <div className="bandeja" data-aberta={total > 0} aria-hidden="true">
-          <div className="posicoes">
-            {composicaoAtual.flatMap((item) => {
-              const adesivo = adesivoDoSabor(item.nome);
-              return Array.from({ length: alvo == null ? 1 : item.quantidade }, (_, i) => (
-                <div className="posicao preenchida" key={`${item.produtoId || item.nome}-${i}`}>
-                  {adesivo && <Image src={adesivo} alt="" width={60} height={60} />}
-                  <span>{alvo == null && `${item.quantidade}× `}{item.nome}</span>
-                </div>
-              ));
-            })}
-            {Array.from({ length: Math.max(0, (alvo ?? total) - total) }, (_, i) => (
-              <span className="posicao vazia" key={`vazia-${i}`} />
-            ))}
-          </div>
-          <div className="tampa">
-            <Image src="/marca/logo-bege.webp" alt="" width={86} height={70} />
-          </div>
-        </div>
-        <div className="acompanhamento">
-          <Cookinho pose={pose} />
+      <figure className="previa-caixa">
+        <div className="caixa-dobras" data-aberta={total > 0} role="img"
+          aria-label={total > 0 ? "Embalagem aberta" : "Embalagem fechada"} />
+        <figcaption>
           <p role="status" aria-atomic="true">{adicionada ? "Caixa no carrinho" : progresso}</p>
-        </div>
-      </div>
+          {total > 0 && (
+            <p className="sabores-escolhidos">
+              {composicaoAtual.map((item) => `${item.quantidade}× ${item.nome}`).join(" · ")}
+            </p>
+          )}
+        </figcaption>
+      </figure>
       <div className="escolhas">
         <p className="rubrica">{alvo == null ? "Escolha seus sabores" : `Escolha ${alvo} cookies`}</p>
         <ul className="mt-3 divide-y divide-berinjela/20 border-y border-berinjela/20">

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import Image from "next/image";
+import { CookieGirando } from "@/components/CookieGirando";
 import { CardapioSabores } from "@/components/CardapioSabores";
 import { SeletorBox } from "@/components/SeletorBox";
 import { buscarCardapio } from "@/lib/produtos";
@@ -46,9 +47,7 @@ export default async function CardapioPage() {
               <p>Escolha seus cookies recheados ou monte uma caixa com os sabores que você adora.</p>
               <a className="botao-vinho" href="#cardapio">Ver cardápio <span aria-hidden="true">↓</span></a>
             </div>
-            <div className="abertura-arte">
-              <Image src="/marca/caixa-vinho.webp" alt="Arte da caixa Seu Cookie em vinho e bege sobre fundo rosa" width={1250} height={938} priority sizes="(min-width: 1200px) 650px, (min-width: 701px) 52vw, 100vw" />
-            </div>
+            <CookieGirando />
           </div>
         </section>
 

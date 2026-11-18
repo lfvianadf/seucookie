@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Cookinho } from "./Cookinho";
 import { useCarrinho } from "@/context/CarrinhoContext";
 import { formatarPreco, linkWhatsapp, montarMensagemPedido } from "@/lib/site";
 
@@ -48,7 +47,6 @@ export function CarrinhoPainel() {
       <div className="flex h-full flex-col bg-papel">
         <div className="flex items-center justify-between border-b border-berinjela/15 px-6 py-5">
           <h2 className="font-titulo text-3xl text-vinho">Seu pedido</h2>
-          {itens.some((item) => item.composicao?.length) && <Cookinho pose="confere" />}
           <button
             type="button"
             onClick={fecharCarrinho}
