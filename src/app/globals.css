@@ -54,44 +54,52 @@ body {
   border: 2px dashed color-mix(in srgb, var(--berinjela) 35%, transparent);
 }
 
-@theme inline {
-  --color-vinho: var(--vinho);
-}
 :root {
-  --vinho: #6d152c;
   --rosa: #ce5771;
   --papel: #fbf5eb;
   --linha: #43303b36;
 }
-:focus-visible { outline: 3px solid var(--vinho); outline-offset: 3px; }
+:focus-visible { outline: 3px solid var(--berinjela); outline-offset: 3px; }
 .miolo { width: min(100% - 40px, 1200px); margin-inline: auto; }
 .secao { padding-block: clamp(42px, 6vw, 84px); }
 [id="cardapio"], [id="combos"] { scroll-margin-top: 78px; }
-.cabecalho { position: sticky; z-index: 50; top: 0; background: var(--papel); border-bottom: 1px solid var(--linha); color: var(--vinho); }
+.cabecalho { position: sticky; z-index: 50; top: 0; background: var(--berinjela); border-bottom: 1px solid #f3e5d32b; color: var(--massa); }
 .cabecalho .miolo { min-height: 64px; }
 .logo-cabecalho { width: 54px; height: 52px; object-fit: contain; }
 .cabecalho nav { font-size: .875rem; }
 .cabecalho nav a { display: inline-flex; min-height: 44px; align-items: center; }
 .cabecalho nav a:hover, .link-claro:hover { text-decoration: underline; text-underline-offset: 4px; }
-.sacola, .botao-vinho { display: inline-flex; gap: 10px; align-items: center; min-height: 44px; background: var(--vinho); color: var(--papel); font-weight: 700; }
+.sacola, .botao-principal { display: inline-flex; gap: 10px; align-items: center; min-height: 44px; background: var(--berinjela); color: var(--papel); font-weight: 700; }
 .sacola { border-radius: 30px; padding: 0 13px; }
+.cabecalho :focus-visible, .abertura :focus-visible { outline-color: var(--massa); }
 .contador { font-variant-numeric: tabular-nums; }
-.botao-vinho { padding: 12px 22px; border-radius: 4px; transition: transform 180ms ease-out; }
-.botao-vinho:enabled:hover, a.botao-vinho:hover { transform: translateY(-2px); }
+.botao-principal { padding: 12px 22px; border-radius: 4px; transition: transform 180ms ease-out; }
+.botao-principal:enabled:hover, a.botao-principal:hover { transform: translateY(-2px); }
 button { cursor: pointer; }
 button:disabled { cursor: default; }
-.botao-vinho:disabled { opacity: .56; }
+.botao-principal:disabled { opacity: .56; }
 .abertura { position: relative; background: var(--berinjela); color: var(--massa); }
-.abertura::after { content: ""; display: block; height: 52px; background: url('/marca/padrao-berinjela.webp') center top / 320px auto repeat; }
-.abertura-texto { padding-block: 34px 28px; }
+.abertura > .miolo { position: relative; }
+.estampa-abertura {
+  pointer-events: none;
+  position: absolute;
+  inset: auto 0 0;
+  height: 140px;
+  background: url('/marca/padrao-berinjela.webp') center / 330px auto repeat;
+  mask-image: linear-gradient(180deg, transparent, black 52%, transparent);
+  opacity: .8;
+}
+.estampa-abertura canvas { width: 100%; height: 100%; }
+.controle-estampa { position: absolute; z-index: 1; right: 20px; bottom: 10px; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #f3e5d36b; border-radius: 50%; background: var(--berinjela); color: var(--massa); }
+.abertura-texto { padding-block: 34px 125px; }
 .abertura .rubrica { color: var(--massa); }
-.rubrica { font-size: .75rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--vinho); }
+.rubrica { font-size: .75rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--berinjela); }
 .abertura h1, .titulo-grande, .titulo-secao h2, .receita h3 { font-family: var(--font-epoche), serif; font-weight: 400; }
 .abertura h1 { color: var(--massa); font-size: clamp(2rem, 10.5vw, 4.15rem); line-height: .98; letter-spacing: -.045em; margin: 14px 0; }
 .abertura-texto > p:not(.rubrica) { max-width: 35ch; font-size: 1rem; }
-.abertura-texto .botao-vinho { margin-top: 20px; gap: 24px; color: var(--berinjela); background: var(--massa); }
-.abertura a:focus-visible { outline-color: var(--massa); }
-.titulo-grande, .titulo-secao h2 { font-size: clamp(2.4rem, 5vw, 4.2rem); line-height: 1.04; color: var(--vinho); letter-spacing: -.035em; }
+.abertura-texto .botao-principal { margin-top: 20px; gap: 24px; }
+.abertura .botao-principal, .cabecalho .sacola { color: var(--berinjela); background: var(--massa); }
+.titulo-grande, .titulo-secao h2 { font-size: clamp(2.4rem, 5vw, 4.2rem); line-height: 1.04; color: var(--berinjela); letter-spacing: -.035em; }
 .titulo-secao { display: flex; align-items: center; gap: 24px; }
 .titulo-secao span { flex: 1; border-top: 1px solid var(--linha); }
 .capitulo { margin-top: 32px; }
@@ -102,12 +110,12 @@ button:disabled { cursor: default; }
 .adesivo-ampliavel { display: block; width: 100%; background: transparent; transition: transform 180ms; }
 .adesivo-ampliavel:hover { transform: rotate(-3deg); }
 .receita-numero { font-family: var(--font-caveat), cursive; font-size: 1.2rem; color: var(--ameixa); }
-.monograma { display: grid; place-items: center; aspect-ratio: 1; width: 100%; background: var(--massa); color: var(--vinho); font: 3rem var(--font-epoche), serif; border-radius: 50%; }
+.monograma { display: grid; place-items: center; aspect-ratio: 1; width: 100%; background: var(--massa); color: var(--berinjela); font: 3rem var(--font-epoche), serif; border-radius: 50%; }
 .receita-texto { display: flex; flex-direction: column; min-width: 0; height: 100%; }
 .receita h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); line-height: 1.13; overflow-wrap: anywhere; }
 .receita-texto > p { margin: 7px 0 14px; line-height: 1.45; color: var(--ameixa); font-size: .95rem; }
-.receita-compra { margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 12px; color: var(--vinho); }
-.passador { display: inline-flex; align-items: center; flex-shrink: 0; border: 1px solid var(--linha); border-radius: 24px; color: var(--vinho); background: var(--papel); }
+.receita-compra { margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 12px; color: var(--berinjela); }
+.passador { display: inline-flex; align-items: center; flex-shrink: 0; border: 1px solid var(--linha); border-radius: 24px; color: var(--berinjela); background: var(--papel); }
 .passador button { min-width: 44px; min-height: 44px; font-size: 1.3rem; font-weight: bold; }
 .passador button:disabled { opacity: .4; }
 .combos { background: var(--massa); border-block: 1px solid var(--linha); }
@@ -116,9 +124,9 @@ button:disabled { cursor: default; }
 .previa-caixa { position: sticky; top: 64px; z-index: 3; display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: center; background: var(--papel); border-bottom: 1px solid var(--linha); }
 .caixa-dobras { width: 100%; aspect-ratio: 10/7; background: url('/marca/caixa-dobras-mobile.webp') center top / 100% 1900% no-repeat; transition: background-position-y 550ms steps(18); }
 .caixa-dobras[data-aberta="true"] { background-position-y: 100%; }
-.previa-caixa figcaption { padding: 12px; color: var(--vinho); font-weight: 700; }
+.previa-caixa figcaption { padding: 12px; color: var(--berinjela); font-weight: 700; }
 .sabores-escolhidos { margin-top: 4px; font-size: .875rem; font-weight: 400; color: var(--berinjela); overflow-wrap: anywhere; max-height: 6em; overflow-y: auto; }
-.presente { background: var(--vinho); color: var(--massa); padding-block: 32px; }
+.presente { background: var(--berinjela); color: var(--massa); padding-block: 32px; }
 .presente-grade { display: grid; align-items: center; gap: 28px; }
 .presente-grade img { width: 100%; }
 .presente .rubrica, .presente h2 { color: inherit; }
@@ -134,7 +142,14 @@ button:disabled { cursor: default; }
   .miolo { width: min(100% - 80px, 1200px); }
   .cabecalho .miolo { min-height: 76px; }
   .logo-cabecalho { width: 70px; height: 65px; }
-  .abertura::after { position: absolute; inset: 0 0 0 60%; height: auto; background-size: clamp(350px, 38vw, 660px) auto; }
+  .estampa-abertura {
+    inset: 0 0 0 39%;
+    height: auto;
+    background-size: clamp(390px, 36vw, 620px) auto;
+    mask-image: linear-gradient(90deg, transparent, black 52%), linear-gradient(180deg, transparent, black 16%, black 76%, transparent);
+    mask-composite: intersect;
+  }
+  .controle-estampa { right: max(20px, calc((100% - 1200px) / 2)); bottom: 20px; }
   .abertura-texto { width: 58%; padding-block: clamp(44px, 5vw, 72px); }
   .abertura h1 { font-size: clamp(3.1rem, 5.4vw, 5.6rem); }
   .grade-sabores { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 32px; }
@@ -154,11 +169,12 @@ button:disabled { cursor: default; }
 @keyframes surgir { from { opacity: .45; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @keyframes entrar-pedido { from { transform: translateX(100%); } to { transform: none; } }
 @media (prefers-reduced-motion: no-preference) {
-  .abertura h1, .abertura .botao-vinho { animation: surgir 220ms ease-out backwards; }
-  .abertura .botao-vinho { animation-delay: 70ms; }
+  .abertura h1, .abertura .botao-principal { animation: surgir 220ms ease-out backwards; }
+  .abertura .botao-principal { animation-delay: 70ms; }
   .contador, .contador-sabor { animation: surgir 180ms ease-out; }
   .painel-pedido[open] { animation: entrar-pedido 200ms ease-out; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .controle-estampa, .estampa-abertura canvas { display: none; }
   *, *::before, *::after { animation-duration: 0s !important; transition-duration: 0s !important; scroll-behavior: auto !important; }
 }

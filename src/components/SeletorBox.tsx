@@ -100,7 +100,7 @@ export function SeletorBox({ caixa, sabores }: SeletorBoxProps) {
                 <span className="flex min-w-0 flex-wrap items-center gap-2 font-titulo text-lg text-berinjela">
                   {sabor.nome}
                   {Boolean(sabor.acrescimoBox) && (
-                    <span className="font-corpo text-xs font-bold text-vinho">
+                    <span className="font-corpo text-xs font-bold text-berinjela">
                       + {formatarPreco(sabor.acrescimoBox!)}
                     </span>
                   )}
@@ -142,7 +142,7 @@ export function SeletorBox({ caixa, sabores }: SeletorBoxProps) {
           type="button"
           onClick={adicionar}
           disabled={!pronta}
-          className="botao-vinho mt-5 w-full justify-between"
+          className="botao-principal mt-5 w-full justify-between"
         >
           <span>Adicionar caixa</span> <strong>{formatarPreco(precoAtual)}</strong>
         </button>

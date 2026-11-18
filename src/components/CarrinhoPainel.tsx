@@ -46,7 +46,7 @@ export function CarrinhoPainel() {
       }}>
       <div className="flex h-full flex-col bg-papel">
         <div className="flex items-center justify-between border-b border-berinjela/15 px-6 py-5">
-          <h2 className="font-titulo text-3xl text-vinho">Seu pedido</h2>
+          <h2 className="font-titulo text-3xl text-berinjela">Seu pedido</h2>
           <button
             type="button"
             onClick={fecharCarrinho}
@@ -117,7 +117,7 @@ export function CarrinhoPainel() {
                         +
                       </button>
                     </div>
-                    <span className="font-corpo text-sm font-bold text-vinho">
+                    <span className="font-corpo text-sm font-bold text-berinjela">
                       {formatarPreco(item.preco * item.quantidade)}
                     </span>
                   </div>
@@ -138,7 +138,7 @@ export function CarrinhoPainel() {
             <button
               type="button"
               onClick={finalizar}
-              className="botao-vinho mt-4 w-full justify-center"
+              className="botao-principal mt-4 w-full justify-center"
             >
               finalizar pelo whatsapp
             </button>
