@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import Image from "next/image";
+import { TornEdge } from "@/components/TornEdge";
+import { CarrosselEncomendas } from "@/components/CarrosselEncomendas";
 import { CardapioSabores } from "@/components/CardapioSabores";
 import { SeletorBox } from "@/components/SeletorBox";
 import { buscarCardapio } from "@/lib/produtos";
@@ -50,17 +51,21 @@ export default async function CardapioPage() {
           </div>
         </section>
 
-        <div className="miolo secao" id="cardapio">
-          <div className="titulo-secao"><h2>O cardápio</h2><span aria-hidden="true" /></div>
-          {capitulos.map((capitulo) => (
-            <section className="capitulo" key={capitulo.titulo} aria-label={capitulo.titulo}>
-              <h3 className="rubrica">{capitulo.titulo}</h3>
-              <CardapioSabores sabores={capitulo.receitas} />
-            </section>
-          ))}
-        </div>
+        <section className="relative bg-papel secao" id="cardapio">
+          <TornEdge cor="var(--berinjela)" />
+          <div className="miolo">
+            <div className="titulo-secao"><h2>O cardápio</h2><span aria-hidden="true" /></div>
+            {capitulos.map((capitulo) => (
+              <section className="capitulo" key={capitulo.titulo} aria-label={capitulo.titulo}>
+                <h3 className="rubrica">{capitulo.titulo}</h3>
+                <CardapioSabores sabores={capitulo.receitas} />
+              </section>
+            ))}
+          </div>
+        </section>
 
-        <section id="combos" className="secao combos">
+        <section id="combos" className="relative secao combos">
+          <TornEdge cor="var(--papel)" />
           <div className="miolo">
             <p className="rubrica">Combos{caixa.numero !== "—" && ` · nº ${caixa.numero}`}</p>
             <h2 className="titulo-grande">Monte sua caixa</h2>
@@ -70,19 +75,24 @@ export default async function CardapioPage() {
           </div>
         </section>
 
-        <section className="presente">
-          <div className="miolo presente-grade">
-            <Image src="/marca/caixa-rosa.webp" alt="Arte oficial da caixa rosa, com alça e espaço para uma dedicatória" width={1250} height={938} sizes="(min-width: 701px) 45vw, 95vw" />
-            <div>
-              <p className="rubrica">Para presentear</p>
-              <h2 className="titulo-grande">Cabe um carinho aqui.</h2>
-              <p>Uma caixa estampada, um recado na frente e os sabores escolhidos por você. Para presentes e encomendas, combine os detalhes com a gente.</p>
-              <a className="link-claro" href={linkWhatsapp("Oi! Quero combinar uma encomenda para presente.")}>Conversar sobre encomendas ↗</a>
+        <section id="encomendas" className="relative encomendas" aria-labelledby="titulo-encomendas">
+          <TornEdge cor="var(--massa)" />
+          <div className="miolo encomendas-grade">
+            <div className="encomendas-apresentacao">
+              <div>
+                <h2 id="titulo-encomendas" className="titulo-grande">Encomendas de cookies</h2>
+                <p>Aceitamos encomendas para aniversários, empresas, presentes e confraternizações. Fale com a gente para combinar a data, a quantidade, os sabores e a embalagem.</p>
+              </div>
+              <a className="link-claro" href={linkWhatsapp("Oi! Gostaria de um orçamento para uma encomenda de cookies.")}>
+                Pedir orçamento no WhatsApp <span aria-hidden="true">↗</span>
+              </a>
             </div>
+            <CarrosselEncomendas />
           </div>
         </section>
-        <div className="miolo">
-          <section className="secao perguntas">
+        <section className="relative bg-papel secao perguntas">
+          <TornEdge cor="var(--berinjela)" />
+          <div className="miolo">
             <h2 className="font-titulo text-2xl text-berinjela">
               como pedir seu cookie em Natal
             </h2>
@@ -109,8 +119,8 @@ export default async function CardapioPage() {
                 </dd>
               </div>
             </dl>
-          </section>
-        </div>
+          </div>
+        </section>
       </main>
       <Footer corAnterior="var(--papel)" />
     </>

@@ -14,7 +14,7 @@ type ReceitasDestaqueProps = {
 export function ReceitasDestaque({ receitas }: ReceitasDestaqueProps) {
   return (
     <section className="relative px-6 py-20 sm:px-10 sm:py-28">
-      <TornEdge cor="var(--massa)" variante={1} />
+      <TornEdge cor="var(--massa)" />
 
       <div className="mx-auto max-w-4xl">
         <h2 className="ml-4 inline-block font-titulo text-3xl text-berinjela sm:ml-10">

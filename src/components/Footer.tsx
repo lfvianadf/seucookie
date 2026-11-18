@@ -9,7 +9,7 @@ type FooterProps = {
 export function Footer({ corAnterior = "var(--massa)" }: FooterProps) {
   return (
     <footer className="relative mt-auto bg-berinjela px-6 pb-12 pt-14 text-papel sm:px-10 sm:py-14">
-      <TornEdge cor={corAnterior} variante={1} />
+      <TornEdge cor={corAnterior} />
 
       <div className="mx-auto flex max-w-6xl flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
         <div className="flex items-center gap-3">

@@ -5,7 +5,7 @@ import { TornEdge } from "./TornEdge";
 export function NossaHistoria() {
   return (
     <section className="relative bg-massa px-6 py-20 sm:px-10 sm:py-28">
-      <TornEdge cor="var(--papel)" variante={0} />
+      <TornEdge cor="var(--papel)" />
 
       <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 lg:grid-cols-12">
         <div className="lg:col-span-4 lg:col-start-1">

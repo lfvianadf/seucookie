@@ -22,7 +22,7 @@ const OPCOES = [
 export function ComoLevar() {
   return (
     <section className="relative bg-massa px-6 py-20 sm:px-10 sm:py-28">
-      <TornEdge cor="var(--papel)" variante={2} />
+      <TornEdge cor="var(--papel)" />
 
       <div className="mx-auto max-w-3xl">
         <h2 className="font-titulo text-3xl text-berinjela">
